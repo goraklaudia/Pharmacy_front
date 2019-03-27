@@ -1,0 +1,59 @@
+.navbody {
+  background: rgb(55, 46, 226);
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  font-style: normal !important;
+}
+
+#icon {
+  font-size:28px;
+}
+
+
+#icon:hover {
+  font-size:28px;
+  color:black;
+}
+
+#icon1 {
+  font-size:16px;
+}
+
+#icon1:hover {
+  font-size:16px;
+  color:blue;
+}
+
+.text {
+  padding: 2px;
+  padding-right: 20px;
+  text-decoration: none;
+  color: white;
+  float: left;
+}
+
+.textLogin {
+  text-decoration: none;
+  color: white;
+  float: right;
+}
+
+.text :hover {
+  color: gray;
+  cursor: pointer;
+}
+
+.textLogin :hover {
+  color: gray;
+}
+
+#login {
+  cursor: pointer;
+}
+
+#navbarDropdown:hover {
+  color: black;
+}
