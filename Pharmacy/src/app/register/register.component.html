@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="card card-container">
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form class="form-signin">
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="email" name='email' id="inputEmail" class="form-control" placeholder="Email*" [(ngModel)]="email" >
+          <input type="text" name='firstName' id="inputFirstName" class="form-control" placeholder="Imię*" [(ngModel)]="firstName" >
+          <input type="text" name='lastName' id="inputSurName" class="form-control" placeholder="Nazwisko*" [(ngModel)]="lastName" >
+          <input type="password"name='password' id="inputPassword" class="form-control" placeholder="Hasło*" [(ngModel)]="password" >
+          <input type="text"name='role' id="inputRole" class="form-control" placeholder="Rola*" [(ngModel)]="role" >
+          <br><br>
+          <!-- <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="addUser()"> Zarejestruj </button> -->
+      </form>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="addUser(email, firstName, lastName, password, role)"> Zarejestruj </button>
+
+      <label style="color: rgb(204, 204, 204)">* pole wymagane</label>
+
+  </div>
+</div>
