@@ -12,6 +12,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MagazineComponent } from './magazine/magazine.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { SaleComponent } from './sale/sale.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
 
@@ -20,7 +24,11 @@ import { RegisterComponent } from './register/register.component';
     NavbarComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MagazineComponent,
+    EmployeesComponent,
+    SaleComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
