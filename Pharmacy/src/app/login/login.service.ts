@@ -14,6 +14,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(login: Login): Observable<Confirm> {
-    return this.http.post<Confirm>('https://pharmacy.azurewebsites.net//api/Login', login);
+    return this.http.post<Confirm>('https://pharmacy.azurewebsites.net/api/Login', login);
   }
 }
