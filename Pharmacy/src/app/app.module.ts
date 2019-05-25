@@ -16,6 +16,7 @@ import { MagazineComponent } from './magazine/magazine.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { SaleComponent } from './sale/sale.component';
 import { OrdersComponent } from './orders/orders.component';
+import { PrescriptionComponent } from './prescription/prescription.component';
 
 @NgModule({
 
@@ -28,7 +29,8 @@ import { OrdersComponent } from './orders/orders.component';
     MagazineComponent,
     EmployeesComponent,
     SaleComponent,
-    OrdersComponent
+    OrdersComponent,
+    PrescriptionComponent
   ],
   imports: [
     BrowserModule,

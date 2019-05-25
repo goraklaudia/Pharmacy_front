@@ -36,8 +36,10 @@ export class LoginComponent implements OnInit {
       this.http.token = data.token;
       console.log(data);
       this.token = data.token;
-      if (data.token != '') {
+      if (data.token !== '') {
         this.http.email = this.email;
+        console.log(data.token)
+        this.router.navigate(['home']);
       }
     })
 
