@@ -8,6 +8,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { OrdersComponent } from './orders/orders.component';
 import { SaleComponent } from './sale/sale.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
+import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'sale', component: SaleComponent },
   { path: 'prescription', component: PrescriptionComponent },
+  { path: 'addmedicaments', component: AddMedicamentsComponent },
 ];
 
 @NgModule({

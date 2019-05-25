@@ -17,6 +17,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { SaleComponent } from './sale/sale.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
+import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.component';
 
 @NgModule({
 
@@ -30,7 +31,8 @@ import { PrescriptionComponent } from './prescription/prescription.component';
     EmployeesComponent,
     SaleComponent,
     OrdersComponent,
-    PrescriptionComponent
+    PrescriptionComponent,
+    AddMedicamentsComponent
   ],
   imports: [
     BrowserModule,

@@ -18,25 +18,30 @@
         <thead>
           <tr style="background: lightgrey">
             <th scope="col">Nazwa leku</th>
-            <th scope="col">Ilość</th>
-            <th scope="col">Numer</th>
+            <th scope="col">Numer EAN</th>
             <th scope="col">Refundowany</th>
+            <th scope="col">% refundacji</th>
+            <th scope="col">Ilość</th>
             <!-- <th scope="col" style="width: 4px;">Opcja</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Lek 1</td>
-            <td>20</td>
-            <td>45689564953</td>
-            <td>tak</td>
+          <tr *ngFor="let i of listOfMedicaments">
+            <td>{{i.name}}</td>
+            <td>{{i.eanCode}}</td>
+            <td>{{i.isRefunded}}</td>
+            <td>{{i.percentageOfRefund}}</td>
+            <td>{{i.quantity}}</td>
           </tr>
 
           <!-- <tr></tr> -->
         </tbody>
       </table>
 
+      <button class = "btn btn-xs btn-primary" (click)="gotToAdd()"><i class="fa fa-plus"></i></button>
     </div>
+
+
 
   </div>
 </div>
