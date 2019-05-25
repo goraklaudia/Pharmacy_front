@@ -14,7 +14,9 @@ export class RegisterComponent implements OnInit {
   @Input() lastName: String;
   @Input() firstName: String;
   @Input() email: String;
+  @Input() education: String;
   user: User;
+
 
 
   constructor(private router: Router, private http: RegisterService) {
@@ -24,20 +26,22 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  addUser(email, name, surname, password, role) {
-    console.log(email);
+  addUser() {
     this.user.email = this.email;
     this.user.username = this.firstName;
-    this.user.fullname = this.lastName;
+    this.user.fullName = this.lastName;
     this.user.password = this.password;
     this.user.role = this.role;
-
+    this.user.education = this.education;
     this.postUser(this.user);
   }
 
   postUser( user ) {
     this.http.register(user).subscribe(data => {
       console.log(data);
+      console.log('aaa');
+      this.router.navigate(['employees']);
+      // if(data )
     });
   }
 }

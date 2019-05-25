@@ -9,10 +9,11 @@
           <input type="text" name='lastName' id="inputSurName" class="form-control" placeholder="Nazwisko*" [(ngModel)]="lastName" >
           <input type="password"name='password' id="inputPassword" class="form-control" placeholder="Hasło*" [(ngModel)]="password" >
           <input type="text"name='role' id="inputRole" class="form-control" placeholder="Rola*" [(ngModel)]="role" >
+          <input type="text"name='education' id="inputEducation" class="form-control" placeholder="Edukacja*" [(ngModel)]="education" >
           <br><br>
           <!-- <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="addUser()"> Zarejestruj </button> -->
       </form>
-      <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="addUser(email, firstName, lastName, password, role)"> Zarejestruj </button>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" (click)="addUser()"> Zarejestruj </button>
 
       <label style="color: rgb(204, 204, 204)">* pole wymagane</label>
 

@@ -14,44 +14,47 @@
                 <th scope="col">Email</th>
                 <!-- <th scope="col">Wykształcenie</th>
                 <th scope="col">PESEL</th> -->
-                <th scope="col">Hasło</th>
+                <th scope="col">Rola</th>
                 <th scope="col" style="width: 4px;">Opcja</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Jan</td>
-                <td>Kowalski</td>
-                <td>jan.kowalski@gmail.com</td>
-                <td>jsfosfe2432</td>
-                <td><button class = "btn btn-sm btn-secondary">Podgląd</button></td>
+              <tr *ngFor="let i of listOfUsers; let j = index">
+                <td>{{j+1}}</td>
+                <td>{{i.username}}</td>
+                <td>{{i.fullName}}</td>
+                <td>{{i.email}}</td>
+                <td *ngIf="i.role === 'admin'">{{i.role}}</td>
+                <td *ngIf="i.role !== 'admin'">brak</td>
+                <td><button class = "btn btn-xs btn-secondary" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button></td>
               </tr>
 
               <!-- <tr></tr> -->
             </tbody>
           </table>
-          <button class = "btn btn-sm btn-secondary" [routerLink]="['registration']" (click)="registration()">Dodaj</button>
+          <button class = "btn btn-xs btn-primary" [routerLink]="['registration']" (click)="registration()"><i class="fa fa-plus"></i></button>
         </div>
 
-<br><br><br><br>
+<br><br><br>
+<div *ngIf="showBox == true">
     <div class="container">
         <div class="card card-container">
-      <h2>Jan Kowalski</h2>
-      <label for="">Imię: Jan</label>
-      <label for="">Nazwisko: Kowalski </label>
-      <label for="">Email: jan.kowalski@gmail.com</label>
-      <label for="">Hasło: jsfosfe2432</label>
+      <h2>{{showName}}&nbsp;{{showSurName}}</h2>
+      <label for="">Imię: {{showName}}</label>
+      <label for="">Nazwisko: {{showSurName}} </label>
+      <label for="">Email: {{showEmail}}</label>
+      <label for="">Hasło: {{showPassword}}</label>
       <br>
       <div>
       <div style="width:90%; float:left;">&nbsp;</div>
       <div style="width:10%; float:left">
-          <button class = "btn btn-sm btn-danger">Usuń</button>
+          <button class = "btn btn-sm btn-danger">Dezaktywuj</button>
       </div>
     </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 

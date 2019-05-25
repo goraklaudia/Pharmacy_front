@@ -84,19 +84,9 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <!-- <a class="nav-link" href="#">Zaloguj</a> -->
-      <button class="btn my-2 my-sm-0" style="font-size: 12px" [routerLink]="['/login']" routerLinkActive="router-link-active" > <i class="fa fa-sign-in"></i>
+      <button class="btn my-2 my-sm-0" id="loginBtn" style="font-size: 12px" [routerLink]="['/login']" routerLinkActive="router-link-active" > <i class="fa fa-sign-in"></i>
         Zaloguj</button>
-
-      <div class="btn-group" id="acc"style="width: 0vw; overflow: hidden;">
-        <button class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" >
-          <i class="fa fa-user-circle-o" style="font-size: 20px" ></i> &nbsp;&nbsp;<a id="emailText"></a>&nbsp;&nbsp;<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li>
-            <button class="btn my-2 my-sm-0"> <i class="fa fa-sign-out"></i> Wyloguj</button>
-          </li>
-        </ul>
-      </div>
+      <button class="btn my-2 my-sm-0" style="font-size: 12px; display: none"  id="logoutBtn" (click)="logout()"> <i class="fa fa-sign-out"></i> Wyloguj</button>
     </form>
   </div>
 </nav>
