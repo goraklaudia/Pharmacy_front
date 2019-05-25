@@ -52,22 +52,22 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/magazine']" routerLinkActive="router-link-active">Magazyn</a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/magazine']" routerLinkActive="router-link-active">Magazyn</a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/sale']" routerLinkActive="router-link-active">Sprzedaż </a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/sale']" routerLinkActive="router-link-active">Sprzedaż </a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/prescription']" routerLinkActive="router-link-active">Recepty </a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/prescription']" routerLinkActive="router-link-active">Recepty </a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/orders']" routerLinkActive="router-link-active">Zamówienia </a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/orders']" routerLinkActive="router-link-active">Zamówienia </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/employees']" routerLinkActive="router-link-active">Pracownicy </a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/employees']" routerLinkActive="router-link-active">Pracownicy </a>
       </li>
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -84,9 +84,9 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <!-- <a class="nav-link" href="#">Zaloguj</a> -->
-      <button class="btn my-2 my-sm-0" id="loginBtn" style="font-size: 12px" [routerLink]="['/login']" routerLinkActive="router-link-active" > <i class="fa fa-sign-in"></i>
+      <button class="btn my-2 my-sm-0" id="loginBtn" *ngIf="checkIfIsLog()==false" style="font-size: 12px" [routerLink]="['/login']" routerLinkActive="router-link-active" > <i class="fa fa-sign-in"></i>
         Zaloguj</button>
-      <button class="btn my-2 my-sm-0" style="font-size: 12px; display: none"  id="logoutBtn" (click)="logout()"> <i class="fa fa-sign-out"></i> Wyloguj</button>
+      <button class="btn my-2 my-sm-0" style="font-size: 12px;" *ngIf="checkIfIsLog()==true" id="logoutBtn" (click)="logout()"> <i class="fa fa-sign-out"></i> Wyloguj</button>
     </form>
   </div>
 </nav>

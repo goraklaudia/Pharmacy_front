@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-magazine',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MagazineComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private httpLogin: LoginService) { }
 
   ngOnInit() {
+    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+      this.router.navigate(['/login']);
+    }
   }
 
 }

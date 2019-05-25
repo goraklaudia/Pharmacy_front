@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegisterService } from '../register/register.service';
 import { User } from '../register/User';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-employees',
@@ -16,9 +17,12 @@ export class EmployeesComponent implements OnInit {
   showSurName: String;
   showName: String;
 
-  constructor( private router: Router, private http: RegisterService) { }
+  constructor( private router: Router, private http: RegisterService, private httpLogin: LoginService) { }
 
   ngOnInit() {
+    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+      this.router.navigate(['/login']);
+    }
     this.getEmployees();
     this.showBox = false;
   }

@@ -14,23 +14,21 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.http.token)
-    if (this.http.token === '' || this.http.token === undefined || this.http.token === null) {
-      document.getElementById('loginBtn').style.display = 'block';
-      document.getElementById('logoutBtn').style.display = 'none';
-      console.log('tu')
-    } else {
-      document.getElementById('logoutBtn').style.display = 'block';
-      document.getElementById('loginBtn').style.display = 'none';
-      console.log('tu 2')
-    }
   }
 
   logout() {
     console.log('wylogowano');
     this.http.token = '';
-    document.getElementById('loginBtn').style.display = 'block';
-    document.getElementById('logoutBtn').style.display = 'none';
     this.router.navigate(['/home']);
   }
+
+  checkIfIsLog() {
+    if (this.http.token === '' || this.http.token === undefined || this.http.token === null) { 
+      return false;
+    } else { 
+      return true;
+    }
+  }
+
 
 }
