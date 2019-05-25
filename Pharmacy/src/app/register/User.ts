@@ -6,4 +6,5 @@ export class User {
   public password: String;
   public role: String;
   public education: String;
+  public isActive: Boolean;
 }

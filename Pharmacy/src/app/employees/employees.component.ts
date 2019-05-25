@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RegisterService } from '../register/register.service';
 import { User } from '../register/User';
 import { LoginService } from '../login/login.service';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-employees',
@@ -16,8 +17,11 @@ export class EmployeesComponent implements OnInit {
   showEmail: String;
   showSurName: String;
   showName: String;
+  userToUpdate: User;
 
-  constructor( private router: Router, private http: RegisterService, private httpLogin: LoginService) { }
+  constructor( private router: Router, private http: RegisterService, private httpLogin: LoginService, private httpMain: MainService) {
+    this.userToUpdate = new User();
+  }
 
   ngOnInit() {
     if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
@@ -45,5 +49,17 @@ export class EmployeesComponent implements OnInit {
     this.showEmail = i.email;
     this.showSurName = i.fullName;
     this.showName = i.username;
+
+
+    this.userToUpdate = i;
+    this.userToUpdate.isActive = true;
+  }
+
+  deactivateUser() {
+    console.log(this.userToUpdate)
+    this.httpMain.putUser(this.userToUpdate).subscribe(data => {
+      console.log(data);
+      this.getEmployees();
+    });
   }
 }
