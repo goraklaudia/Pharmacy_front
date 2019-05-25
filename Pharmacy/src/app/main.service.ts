@@ -16,7 +16,7 @@ export class MainService {
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {
     console.log(medicaments);
-    return this.http.post<Medicaments>('https://pharmacy.azurewebsites.net/api/Users', medicaments);
+    return this.http.post<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments', medicaments);
   }
 
 }

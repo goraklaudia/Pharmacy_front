@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Medicaments } from '../magazine/Medicaments';
 import { MainService } from '../main.service';
+import { Router } from '@angular/router';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-add-medicaments',
@@ -15,9 +17,12 @@ export class AddMedicamentsComponent implements OnInit {
   @Input() quantity: Number;
   medicaments: Medicaments;
 
-  constructor(private httpMain: MainService) { }
+  constructor(private httpMain: MainService, private router: Router, private httpLogin: LoginService) { }
 
   ngOnInit() {
+    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+      this.router.navigate(['/login']);
+    }
     this.medicaments = new Medicaments();
   }
 
@@ -36,6 +41,7 @@ export class AddMedicamentsComponent implements OnInit {
 
     this.httpMain.postMedicament(this.medicaments).subscribe(data => {
       console.log(data);
+      this.router.navigate(['/magazine']);
 
     });
   }
