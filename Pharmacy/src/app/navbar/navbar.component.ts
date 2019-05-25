@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    console.log('wyllogowano')
+    console.log('wylogowano');
     this.http.token = '';
     document.getElementById('loginBtn').style.display = 'block';
     document.getElementById('logoutBtn').style.display = 'none';
