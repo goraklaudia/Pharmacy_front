@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login/login.service';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { LoginService } from '../login/login.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: LoginService) { }
+  constructor(private http: MainService) { }
 
   ngOnInit() {
 

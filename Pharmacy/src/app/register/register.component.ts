@@ -1,7 +1,7 @@
-import { RegisterService } from './register.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './User';
+import { User } from '../objects/User';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private http: RegisterService) {
+  constructor(private router: Router, private http: MainService) {
     this.user = new User();
   }
 

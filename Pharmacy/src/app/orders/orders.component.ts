@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../login/login.service';
-import { Order } from './Order';
+import { Order } from '../objects/Order';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-orders',
@@ -15,11 +15,11 @@ export class OrdersComponent implements OnInit {
   showBox: Boolean;
 
 
-  constructor(private router: Router, private httpLogin: LoginService) { }
+  constructor(private router: Router, private httpMain: MainService) { }
 
   ngOnInit() {
     this.showBox = false;
-    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+    if (this.httpMain.token === '' || this.httpMain.token === undefined) {
       this.router.navigate(['/login']);
     }
   }

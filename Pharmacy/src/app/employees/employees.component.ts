@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RegisterService } from '../register/register.service';
-import { User } from '../register/User';
-import { LoginService } from '../login/login.service';
+import { User } from '../objects/User';
 import { MainService } from '../main.service';
 
 @Component({
@@ -19,12 +17,12 @@ export class EmployeesComponent implements OnInit {
   showName: String;
   userToUpdate: User;
 
-  constructor( private router: Router, private http: RegisterService, private httpLogin: LoginService, private httpMain: MainService) {
+  constructor( private router: Router, private httpMain: MainService) {
     this.userToUpdate = new User();
   }
 
   ngOnInit() {
-    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+    if (this.httpMain.token === '' || this.httpMain.token === undefined) {
       this.router.navigate(['/login']);
     }
     this.getEmployees();
@@ -36,7 +34,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   getEmployees() {
-    this.http.getUsers().subscribe((data) => {
+    this.httpMain.getUsers().subscribe((data) => {
       this.listOfUsers = data;
 
       console.log( this.listOfUsers );

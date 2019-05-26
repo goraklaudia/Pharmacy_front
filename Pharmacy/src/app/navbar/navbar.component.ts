@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from '../register/register.service';
-import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private http: LoginService, private router: Router) { }
+  constructor(private http: MainService, private router: Router) { }
 
   ngOnInit() {
     console.log(this.http.token)
@@ -23,9 +22,9 @@ export class NavbarComponent implements OnInit {
   }
 
   checkIfIsLog() {
-    if (this.http.token === '' || this.http.token === undefined || this.http.token === null) { 
+    if (this.http.token === '' || this.http.token === undefined || this.http.token === null) {
       return false;
-    } else { 
+    } else {
       return true;
     }
   }

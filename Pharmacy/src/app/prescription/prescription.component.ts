@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../login/login.service';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-prescription',
@@ -9,10 +9,10 @@ import { LoginService } from '../login/login.service';
 })
 export class PrescriptionComponent implements OnInit {
 
-  constructor(private router: Router, private httpLogin: LoginService) { }
+  constructor(private router: Router, private httpMain: MainService) { }
 
   ngOnInit() {
-    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+    if (this.httpMain.token === '' || this.httpMain.token === undefined) {
       this.router.navigate(['/login']);
     }
   }

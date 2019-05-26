@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Medicaments } from '../magazine/Medicaments';
+import { Medicaments } from '../objects/Medicaments';
 import { MainService } from '../main.service';
 import { Router } from '@angular/router';
-import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-add-medicaments',
@@ -17,10 +16,10 @@ export class AddMedicamentsComponent implements OnInit {
   @Input() quantity: Number;
   medicaments: Medicaments;
 
-  constructor(private httpMain: MainService, private router: Router, private httpLogin: LoginService) { }
+  constructor(private httpMain: MainService, private router: Router) { }
 
   ngOnInit() {
-    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+    if (this.httpMain.token === '' || this.httpMain.token === undefined) {
       this.router.navigate(['/login']);
     }
     this.medicaments = new Medicaments();
