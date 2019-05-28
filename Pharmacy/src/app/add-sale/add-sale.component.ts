@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddSaleComponent implements OnInit {
 
+  listOfExistsMedicaments
   constructor() { }
-
+  
   ngOnInit() {
   }
+
 
 }
