@@ -12,9 +12,13 @@ export class SaleComponent implements OnInit {
   constructor(private router: Router, private httpLogin: MainService) { }
 
   ngOnInit() {
-    if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
-      this.router.navigate(['/login']);
-    }
+    // if (this.httpLogin.token === '' || this.httpLogin.token === undefined) {
+    //   this.router.navigate(['/login']);
+    // }
+  }
+
+  moveToAdd() {
+    this.router.navigate(['/addsale']);
   }
 
 }

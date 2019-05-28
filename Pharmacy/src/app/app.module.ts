@@ -18,6 +18,7 @@ import { SaleComponent } from './sale/sale.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.component';
+import { AddSaleComponent } from './add-sale/add-sale.component';
 
 @NgModule({
 
@@ -32,7 +33,8 @@ import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.compo
     SaleComponent,
     OrdersComponent,
     PrescriptionComponent,
-    AddMedicamentsComponent
+    AddMedicamentsComponent,
+    AddSaleComponent
   ],
   imports: [
     BrowserModule,

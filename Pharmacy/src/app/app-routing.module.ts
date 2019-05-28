@@ -9,6 +9,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { SaleComponent } from './sale/sale.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.component';
+import { AddSaleComponent } from './add-sale/add-sale.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'sale', component: SaleComponent },
   { path: 'prescription', component: PrescriptionComponent },
   { path: 'addmedicaments', component: AddMedicamentsComponent },
+  { path: 'addsale', component: AddSaleComponent },
   { path: '**', component: HomeComponent },
 ];
 
