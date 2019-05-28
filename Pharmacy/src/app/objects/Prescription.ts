@@ -1,21 +1,21 @@
-import { Time } from "@angular/common";
+import { PrescriptionElement } from "./PrescriptionElement";
 
 export class Prescription{
-    public pharmacistId: string;
-    public dateOfIssue: Time;
-    public addressOfThePatient: string;
-    public dateOfFinalization: Time;
-    public licenceNumberOfTheDoctor: string;
-    public nameOfTheDoctor: string;
-    public nameOfThePatient: string;
-    public nipOrRegonOfTheProvider: string;
-    public peselNumberOfThePatient: string;
-    public provider: string;
-    public specializationOfTheDoctor: string;
-    public surnameOfTheDoctor: string;
-    public surnameOfThePatient: string;
-    public 
-
-
+    public pharmacistId: String;
+    public prescriptionId: String;
+    public dateOfIssue: Date;
+    public addressOfThePatient: String;
+    public dateOfFinalization: Date;
+    public licenceNumberOfTheDoctor: String;
+    public nameOfTheDoctor: String;
+    public nameOfThePatient: String;
+    public nipOrRegonOfTheProvider: String;
+    public peselNumberOfThePatient: String;
+    public provider: String;
+    public specializationOfTheDoctor: String;
+    public surnameOfTheDoctor: String;
+    public surnameOfThePatient: String;
+    public listOfPrescriptionElements: PrescriptionElement[];
+    public verificationCode: String;
 
 }

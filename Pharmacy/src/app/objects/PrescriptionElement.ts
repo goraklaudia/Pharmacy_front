@@ -1,6 +1,7 @@
 export class PrescriptionElement{
-    public prescriptionId: string;
-    public medicamentId: string;
-    public quantity: number;
-    public dosage: string;
+    public prescriptionId: String;
+    public medicamentId: String;
+    public quantity: Number;
+    public dosage: String;
+    public submitted: Boolean;
 }
