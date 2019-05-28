@@ -25,12 +25,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="number" class="form-control" placeholder="PESEL *"/> <br>
-        <input type="number" class="form-control" placeholder="Kod weryfikacujny *"/>
+        <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL *"/> <br>
+        <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacujny *"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success">Zrealizuj</button>
+        <button type="button" class="btn btn-success" (click)= "addErecept()">Zrealizuj</button>
       </div>
     </div>
   </div>
@@ -47,16 +47,69 @@
         </button>
       </div>
       <div class="modal-body">
+        <label style="font-size: 14px; font-weight:bold">Numer recepty: </label>
+        <input type="text" [(ngModel)]="nrPrescR"  class="form-control" placeholder="Numer recepty *" data-toggle="tooltip" data-placement="left" title="Numer musi miec długość 22"/> <br>
+
         <hr>
-        <hr class="hr-text" data-content="AND">
-        
-        <input type="number" class="form-control" placeholder="PESEL *"/> <br>
-        <input type="number" class="form-control" placeholder="Kod weryfikacujny *"/>
-     
+        <label style="font-size: 14px; font-weight:bold">Świadczeniodawca: </label>
+
+          <input type="text" [(ngModel)]="nrNIPR"  class="form-control" placeholder="NIP/REGON *"/> <br>
+          <div class="form-group">
+              <textarea class="form-control" [(ngModel)]="namePoviderR"  id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+            <hr>
+        <label style="font-size: 14px; font-weight:bold">Dane pacjęta: </label>
+         <input type="text" class="form-control" placeholder="Imię" [(ngModel)]="namePacientR" /> <br>
+         <input type="text" class="form-control" placeholder="Nazwisko" [(ngModel)]="surnamePacientR" /> <br>
+         <input type="text" class="form-control" placeholder="Adres" [(ngModel)]="adresPacientR"  /> <br>
+         <input type="text" class="form-control" placeholder="PESEL *" [(ngModel)]="peselPatientR"  /> <br>
+         <hr>
+        <label style="font-size: 14px; font-weight:bold">Leki: </label>
+
+        <div class="input-group mb-3">
+            <input type="text" [(ngModel)]="eanCodeR"  class="form-control" placeholder="Kod EAH *" data-toggle="tooltip" data-placement="left" title="Kod EAD musi mieć długość 13"/> <br>
+            <div class="input-group-append">
+                <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToList()"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+
+        <table class="table table-bordered" id="">
+
+        <thead>
+          <tr style="background: lightgrey">
+            <th scope="col">Kod EAN</th>
+            <th scope="col" style="width: 4%">Opcja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of listOfAddedMedicamentsR;">
+            <td>{{i}}</td>
+            <td>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+
+          <!-- <tr></tr> -->
+        </tbody>
+      </table>
+
+      <hr>
+        <label style="font-size: 14px; font-weight:bold">Dane lekarza: </label>
+        <input type="text" name="nameDoctorR"  class="form-control" [(ngModel)]="nameDoctorR"  placeholder="Imię"/> <br>
+        <input type="text" class="form-control"[(ngModel)]="surnameDoctorR"   placeholder="Nazwisko"/> <br>
+        <input type="text" class="form-control"[(ngModel)]="specializationDoctorR"  placeholder="Specjalizacja"/> <br>
+        <input type="text" class="form-control"[(ngModel)]="licenseNumberOfTheDoctorR"  placeholder="Numer prawa wykonywania zawodu *"/> <br>
+        <hr>
+        <label style="font-size: 14px; font-weight:bold">Dane recepty: </label>
+        <input type="date" class="form-control" [(ngModel)]="dateOfIssueR" placeholder="Data wystawienia"/> <br>
+        <input type="date" class="form-control" [(ngModel)]="dateOfFinalizationR" placeholder="Data realizacji 'od dnia'"/> <br>
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success">Zrealizuj</button>
+        <button type="button" class="btn btn-success" (click)= "addRecept()">Zrealizuj</button>
       </div>
     </div>
   </div>
@@ -74,11 +127,36 @@
         </button>
       </div>
       <div class="modal-body">
-          <input type="text" name='eanCode' required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Kod EAN*" [(ngModel)]="eanCodeWR" >
-      </div>
+          <div class="input-group mb-3">
+            <input type="text" name='eanCode' [(ngModel)]="eanCodeWR" required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Kod EAN*">
+            <div class="input-group-append">
+                <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToListWR()"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+
+        <table class="table table-bordered" id="">
+
+          <thead>
+            <tr style="background: lightgrey">
+              <th scope="col">Kod EAN</th>
+              <th scope="col" style="width: 4%">Opcja</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of listOfAddedMedicamentsWR;">
+              <td>{{i}}</td>
+              <td>
+                <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListWR(i)"><i class="fa fa-trash"></i></button>
+              </td>
+            </tr>
+
+            <!-- <tr></tr> -->
+          </tbody>
+        </table>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success">Zrealizuj</button>
+        <button type="button" class="btn btn-success" (click)="addWithoutRecept()">Zrealizuj</button>
       </div>
     </div>
   </div>
