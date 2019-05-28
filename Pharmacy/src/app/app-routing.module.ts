@@ -10,6 +10,7 @@ import { SaleComponent } from './sale/sale.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { AddMedicamentsComponent } from './add-medicaments/add-medicaments.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
+import { SaleEventComponent } from './sale-event/sale-event.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'prescription', component: PrescriptionComponent },
   { path: 'addmedicaments', component: AddMedicamentsComponent },
   { path: 'addsale', component: AddSaleComponent },
+  { path: 'saleevent', component: SaleEventComponent },
   { path: '**', component: HomeComponent },
 ];
 

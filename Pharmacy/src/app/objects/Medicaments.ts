@@ -4,5 +4,6 @@ export class Medicaments {
   public eanCode: String;
   public isRefunded: Boolean;
   public percentageOfRefund: Number;
+  public sellingPrice: Number;
   public quantity: Number;
 }
