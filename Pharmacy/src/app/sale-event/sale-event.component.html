@@ -29,8 +29,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let i of listOfAddedMedicamentsR;">
-            <td>{{i}}</td>
+          <tr *ngFor="let i of listOfMedicaments;">
+            <td>{{i[0].eanCode}}</td>
+            <td>{{i[0].name}}</td>
+            <td>{{i[1]}}</td>
+            <td>{{i[0].sellingPrice}}</td>
+            <td>23</td>
+            <td>{{i[1]*i[0].sellingPrice*1.23}}</td>
             <td>
               <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
             </td>
@@ -39,6 +44,10 @@
           <!-- <tr></tr> -->
         </tbody>
       </table>
+
+      <br><br>
+      <button type="button" class="btn btn-primary ">Primary</button>
+
     </div>
 </div>
 
@@ -132,7 +141,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let i of listOfAddedMedicamentsR;">
-            <td>{{i}}</td>
+            <td>{{i[0].eanCode}}</td>
+            <td>{{i[1]}}</td>
             <td>
               <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
             </td>
@@ -194,7 +204,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let i of listOfAddedMedicamentsWR;">
-              <td>{{i[0]}}</td>
+              <td>{{i[0].eanCode}}</td>
               <td>{{i[1]}}</td>
               <td>
                 <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListWR(i)"><i class="fa fa-trash"></i></button>
@@ -206,7 +216,7 @@
         </table>
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeWR">Anuluj</button>
         <button type="button" class="btn btn-success" (click)="addWithoutRecept()">Zrealizuj</button>
       </div>
     </div>

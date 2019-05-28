@@ -8,7 +8,7 @@ import { MainService } from '../main.service';
   styleUrls: ['./sale-event.component.css']
 })
 export class SaleEventComponent implements OnInit {
-  listOfMedicaments: Medicaments[] = [];
+  listOfMedicaments: Array<Array<any>> = new Array();
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -45,12 +45,12 @@ export class SaleEventComponent implements OnInit {
   ngOnInit() {
   }
 
-  getMedicamentsList() {
-    this.http.getMedicaments().subscribe(data => {
-      console.log(data);
-      this.listOfMedicaments = data;
-    });
-  }
+  // getMedicamentsList() {
+  //   this.http.getMedicaments().subscribe(data => {
+  //     console.log(data);
+  //     this.listOfMedicaments = data;
+  //   });
+  // }
 
 
   removeMedFromList(i) {
@@ -69,18 +69,26 @@ export class SaleEventComponent implements OnInit {
 
   addMedicamentToList(){
     console.log(this.eanCodeR);
-    this.http.getMedicament(this.eanCodeR).subscribe(data=>{
-    console.log(data);
-    this.listOfAddedMedicamentsR.push([data,this.quantityR]);
-    this.eanCodeR = '';
+    this.http.getMedicament(this.eanCodeR).subscribe(data => {
+      console.log(data);
+      this.listOfAddedMedicamentsR.push([data, this.quantityR]);
+      this.eanCodeR = '';
     });
   }
 
   addMedicamentToListWR(){
-    console.log(this.eanCodeR);
-    this.listOfAddedMedicamentsWR.push([this.eanCodeWR, this.quantityWR]);
-    this.eanCodeWR = '';
-    this.quantityWR = '';
+    // console.log(this.eanCodeWR);
+    // this.listOfAddedMedicamentsWR.push([this.eanCodeWR, this.quantityWR]);
+    // this.eanCodeWR = '';
+    // this.quantityWR = '';
+
+    console.log(this.eanCodeWR);
+    this.http.getMedicament(this.eanCodeWR).subscribe(data => {
+      console.log(data);
+      this.listOfAddedMedicamentsWR.push([data, this.quantityWR]);
+      this.eanCodeWR = '';
+      this.quantityWR = '';
+    });
   }
 
 
@@ -115,6 +123,11 @@ export class SaleEventComponent implements OnInit {
     console.log(this.licenseNumberOfTheDoctorR)
     console.log(this.dateOfFinalizationR)
     console.log(this.dateOfIssueR)
+
+    this.listOfAddedMedicamentsR.forEach(element => {
+      this.listOfMedicaments.push(element);
+    });
+
   }
 
   addErecept() {
@@ -123,7 +136,14 @@ export class SaleEventComponent implements OnInit {
   }
 
   addWithoutRecept() {
-    console.log(this.eanCodeWR)
+    console.log(this.eanCodeWR);
+
+    this.listOfAddedMedicamentsWR.forEach(element => {
+      this.listOfMedicaments.push(element);
+    });
+
+    document.getElementById('closeWR').click();
+
   }
 
 }
