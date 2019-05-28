@@ -11,7 +11,8 @@ export class SaleEventComponent implements OnInit {
   listOfMedicaments: Medicaments[] = [];
   //bez recepty
   @Input() eanCodeWR: String;
-  @Output() listOfAddedMedicamentsWR: String[] = [];
+  @Input() quantityWR: String;
+  @Output() listOfAddedMedicamentsWR: Array<Array<any>> = new Array();
 
   //recepta
   @Input() nrPrescR: String;
@@ -22,6 +23,7 @@ export class SaleEventComponent implements OnInit {
   @Input() adresPacientR: String;
   @Input() peselPatientR: String;
   @Input() eanCodeR: String;
+  @Input() quantityR: String;
   @Input() nameDoctorR: String;
   @Input() surnameDoctorR: String;
   @Input() specializationDoctorR: String;
@@ -29,7 +31,7 @@ export class SaleEventComponent implements OnInit {
   @Input() dateOfFinalizationR: Date;
   @Input() dateOfIssueR: Date;
 
-  @Output() listOfAddedMedicamentsR: String[] = [];
+  @Output() listOfAddedMedicamentsR: Array<Array<any>>= new Array();
   // e-recepta
   @Input() peselPacientER: String;
   @Input() verCodeER: String;
@@ -37,7 +39,8 @@ export class SaleEventComponent implements OnInit {
   // @Input()
   // @Input()
 
-  constructor(private http: MainService) { }
+  constructor(private http: MainService) {
+  }
 
   ngOnInit() {
   }
@@ -66,14 +69,18 @@ export class SaleEventComponent implements OnInit {
 
   addMedicamentToList(){
     console.log(this.eanCodeR);
-    this.listOfAddedMedicamentsR.push(this.eanCodeR);
+    this.http.getMedicament(this.eanCodeR).subscribe(data=>{
+    console.log(data);
+    this.listOfAddedMedicamentsR.push([data,this.quantityR]);
     this.eanCodeR = '';
+    });
   }
 
   addMedicamentToListWR(){
     console.log(this.eanCodeR);
-    this.listOfAddedMedicamentsWR.push(this.eanCodeWR);
-    this.eanCodeR = '';
+    this.listOfAddedMedicamentsWR.push([this.eanCodeWR, this.quantityWR]);
+    this.eanCodeWR = '';
+    this.quantityWR = '';
   }
 
 

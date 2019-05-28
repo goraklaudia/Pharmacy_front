@@ -9,8 +9,56 @@
       <button type="button" class="btn btn-sm btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#withoutrecept">bez recepty</button>
       <!-- </div> -->
 
+      <br>
+      <br>
+      <br>
+      <hr>
+      <h3 style="text-align: center"> Produkty do sprzedaży </h3>
+      <br>
+      <table class="table table-bordered" id="">
+
+        <thead>
+          <tr style="background: lightgrey">
+            <th scope="col">Kod EAN</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Ilość</th>
+            <th scope="col">Cena netto</th>
+            <th scope="col">VAT[%]</th>
+            <th scope="col">Wartość brutto</th>
+            <th scope="col" style="width: 4%">Opcja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of listOfAddedMedicamentsR;">
+            <td>{{i}}</td>
+            <td>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+
+          <!-- <tr></tr> -->
+        </tbody>
+      </table>
+    </div>
 </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,7 +107,7 @@
             </div>
 
             <hr>
-        <label style="font-size: 14px; font-weight:bold">Dane pacjęta: </label>
+        <label style="font-size: 14px; font-weight:bold">Dane pacjenta: </label>
          <input type="text" class="form-control" placeholder="Imię" [(ngModel)]="namePacientR" /> <br>
          <input type="text" class="form-control" placeholder="Nazwisko" [(ngModel)]="surnamePacientR" /> <br>
          <input type="text" class="form-control" placeholder="Adres" [(ngModel)]="adresPacientR"  /> <br>
@@ -68,7 +116,7 @@
         <label style="font-size: 14px; font-weight:bold">Leki: </label>
 
         <div class="input-group mb-3">
-            <input type="text" [(ngModel)]="eanCodeR"  class="form-control" placeholder="Kod EAH *" data-toggle="tooltip" data-placement="left" title="Kod EAD musi mieć długość 13"/> <br>
+            <input type="text" [(ngModel)]="eanCodeR"  class="form-control" placeholder="Kod EAN *" data-toggle="tooltip" data-placement="left" title="Kod EAD musi mieć długość 13"/> <br>
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToList()"><i class="fa fa-plus"></i></button>
             </div>
@@ -129,6 +177,7 @@
       <div class="modal-body">
           <div class="input-group mb-3">
             <input type="text" name='eanCode' [(ngModel)]="eanCodeWR" required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Kod EAN*">
+            <input type="number" name='quantityWR' [(ngModel)]="quantityWR" required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Ilość">
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToListWR()"><i class="fa fa-plus"></i></button>
             </div>
@@ -139,12 +188,14 @@
           <thead>
             <tr style="background: lightgrey">
               <th scope="col">Kod EAN</th>
+              <th scope="col">Ilość</th>
               <th scope="col" style="width: 4%">Opcja</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of listOfAddedMedicamentsWR;">
-              <td>{{i}}</td>
+              <td>{{i[0]}}</td>
+              <td>{{i[1]}}</td>
               <td>
                 <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListWR(i)"><i class="fa fa-trash"></i></button>
               </td>

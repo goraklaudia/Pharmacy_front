@@ -19,6 +19,11 @@ export class MainService {
     return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');
   }
 
+  getMedicament(eanCode: String): Observable<Medicaments> {
+
+    return this.http.get<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments/' + eanCode);
+  }
+
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {
     console.log(medicaments);
     return this.http.post<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments', medicaments);
