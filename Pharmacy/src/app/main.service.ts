@@ -39,7 +39,7 @@ export class MainService {
   }
 
   getMedicamentELeki(eanCode: String): Observable<Medicaments> {
-    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/?ean=' + eanCode);
+    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/' + eanCode);
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {

@@ -92,21 +92,27 @@ export class SaleEventComponent implements OnInit {
     // this.quantityWR = '';
 
     console.log(this.eanCodeWR);
-    this.http.getMedicament(this.eanCodeWR).subscribe(data => {
+
+    this.http.getMedicamentELeki(this.eanCodeWR).subscribe(data => {
       console.log(data);
       this.listOfAddedMedicamentsWR.push([data, this.quantityWR]);
       this.eanCodeWR = '';
       this.quantityWR = '';
     });
+    // this.http.getMedicament(this.eanCodeWR).subscribe(data => {
+
+    // });
   }
 
   addERecept(){
     this.listOfAddedMedicamentsER.forEach(element => {
       this.http.getMedicamentELeki(element[0]).subscribe(data => {
         console.log(data);
+        this.listOfMedicaments.push([data, element[1]]);
       });
-      this.listOfMedicaments.push(element);
     });
+
+
   }
 
   addRecept(){

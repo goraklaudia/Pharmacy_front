@@ -5,7 +5,6 @@ import { User } from './User';
 export class Order {
   public id: String;
   public pharmacistId: String;
-  public pharmacist: User;
   public dateOfIssue: Date;
   public dateOfFinalization: Date;
   public status: String;

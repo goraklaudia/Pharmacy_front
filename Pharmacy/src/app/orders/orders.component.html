@@ -29,7 +29,7 @@
             <!-- <tr></tr> -->
           </tbody>
         </table>
-        <button class = "btn btn-xs btn-primary" ><i class="fa fa-plus"></i></button>
+        <button class = "btn btn-xs btn-primary" data-toggle="modal" data-target="#createorder" ><i class="fa fa-plus"></i></button>
       </div>
 
 <br><br><br>
@@ -55,7 +55,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="erecept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,9 +65,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL*"/> <br>
-        <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacyjny*"/>
+        <input type="text" name = "peselPacientER" [(ngModel)]="eanCode"  class="form-control" placeholder="Kod EAN*"/> <br>
+        <input type="number" name = "verCodeER" [(ngModel)]="quantity" class="form-control" placeholder="Ilość *"/>
 <br>
+      <div style = "text-align: center">
+        <button type="button" class="btn btn-info" (click)= "loadMedicaments()">Dodaj</button>
+      </div>
 
         <table class="table table-bordered" id="">
 
@@ -79,11 +82,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let i of listOfAddedMedicamentsER;">
+          <tr *ngFor="let i of listOfMedicaments;">
             <td>{{i[0]}}</td>
             <td>{{i[1]}}</td>
             <td>
-              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListER(i)"><i class="fa fa-trash"></i></button>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
 
@@ -91,14 +94,12 @@
         </tbody>
       </table>
       <br>
-      <div style = "text-align: center">
-        <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
-      </div>
+
       <hr>
     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success" (click)= "addERecept()">Zrealizuj</button>
+        <button type="button" class="btn btn-success" (click)= "createOrder()">Zrealizuj</button>
       </div>
     </div>
   </div>
