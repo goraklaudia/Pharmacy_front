@@ -46,27 +46,10 @@
       </table>
 
       <br><br>
-      <button type="button" class="btn btn-primary ">Primary</button>
+      <button type="button" class="btn btn-success">Zatwierdź</button>
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -82,12 +65,36 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL *"/> <br>
-        <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacujny *"/>
+        <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL*"/> <br>
+        <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacyjny*"/>
       </div>
+
+        <table class="table table-bordered" id="">
+
+        <thead>
+          <tr style="background: lightgrey">
+            <th scope="col">Kod EAN</th>
+            <th scope="col">Ilość</th>
+            <th scope="col" style="width: 4%">Opcja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of listOfAddedMedicamentsER;">
+            <td></td>
+            <td></td>
+            <td>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListER(i)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+
+          <!-- <tr></tr> -->
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
+      <hr>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success" (click)= "addErecept()">Zrealizuj</button>
+        <button type="button" class="btn btn-success" (click)= "addMedicamentToListER()">Zrealizuj</button>
       </div>
     </div>
   </div>
@@ -110,7 +117,7 @@
         <hr>
         <label style="font-size: 14px; font-weight:bold">Świadczeniodawca: </label>
 
-          <input type="text" [(ngModel)]="nrNIPR"  class="form-control" placeholder="NIP/REGON *"/> <br>
+          <input type="text" [(ngModel)]="nrNIPR"  class="form-control" placeholder="NIP/REGON *" required/> <br>
           <div class="form-group">
               <textarea class="form-control" [(ngModel)]="namePoviderR"  id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
@@ -120,12 +127,16 @@
          <input type="text" class="form-control" placeholder="Imię" [(ngModel)]="namePacientR" /> <br>
          <input type="text" class="form-control" placeholder="Nazwisko" [(ngModel)]="surnamePacientR" /> <br>
          <input type="text" class="form-control" placeholder="Adres" [(ngModel)]="adresPacientR"  /> <br>
-         <input type="text" class="form-control" placeholder="PESEL *" [(ngModel)]="peselPatientR"  /> <br>
+         <input type="text" class="form-control" placeholder="PESEL *" [(ngModel)]="peselPatientR"  required /> <br>
          <hr>
         <label style="font-size: 14px; font-weight:bold">Leki: </label>
 
         <div class="input-group mb-3">
-            <input type="text" [(ngModel)]="eanCodeR"  class="form-control" placeholder="Kod EAN *" data-toggle="tooltip" data-placement="left" title="Kod EAD musi mieć długość 13"/> <br>
+            <input type="text" [(ngModel)]="eanCodeR"  class="form-control" placeholder="Kod EAN *" data-toggle="tooltip" data-placement="left" title="Kod EAN musi mieć długość 13"/> <br>
+            <!-- <div *ngIf="name.errors.minlength">
+              Kod EAN musi posiadać 14 cyfr
+            </div> -->
+            <input type="number" name='quantityR' [(ngModel)]="quantityR" required minlength="13" maxlength="13" id="eanCodeR" class="form-control" placeholder="Ilość" required>
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToList()"><i class="fa fa-plus"></i></button>
             </div>
@@ -136,6 +147,7 @@
         <thead>
           <tr style="background: lightgrey">
             <th scope="col">Kod EAN</th>
+            <th scope="col">Ilość</th>
             <th scope="col" style="width: 4%">Opcja</th>
           </tr>
         </thead>
@@ -159,9 +171,10 @@
         <input type="text" class="form-control"[(ngModel)]="specializationDoctorR"  placeholder="Specjalizacja"/> <br>
         <input type="text" class="form-control"[(ngModel)]="licenseNumberOfTheDoctorR"  placeholder="Numer prawa wykonywania zawodu *"/> <br>
         <hr>
-        <label style="font-size: 14px; font-weight:bold">Dane recepty: </label>
-        <input type="date" class="form-control" [(ngModel)]="dateOfIssueR" placeholder="Data wystawienia"/> <br>
-        <input type="date" class="form-control" [(ngModel)]="dateOfFinalizationR" placeholder="Data realizacji 'od dnia'"/> <br>
+        <label for="dateOfIssueR" style="font-size: 14px; font-weight:bold">Data wystawienia recepty: </label>
+        <input type="date" class="form-control" [(ngModel)]="dateOfIssueR" placeholder="Data wystawienia" id="dateOfIssueR"/> <br>
+        <label for="dateOfFinalizationR" style="font-size: 14px; font-weight:bold">Data ważności recepty: </label>
+        <input type="date" class="form-control" [(ngModel)]="dateOfFinalizationR" placeholder="Data realizacji 'od dnia'" id="dateOfFinalizationR"/> <br>
 
 
       </div>

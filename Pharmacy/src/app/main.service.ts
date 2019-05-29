@@ -5,6 +5,7 @@ import { Medicaments } from './objects//Medicaments';
 import { User } from './objects/User';
 import { Login } from './objects/Login';
 import { Confirm } from './objects/Confirm';
+import { Prescription } from './objects/Prescription';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class MainService {
   token: String;
 
   constructor(private http: HttpClient) { }
+
+  getPrescription(peselPacientER: String, verCodeER: String): Observable<Prescription> {
+    return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/'+ peselPacientER + '?code=' + verCodeER);
+  }
 
   getMedicaments(): Observable<Array<Medicaments>> {
     return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');

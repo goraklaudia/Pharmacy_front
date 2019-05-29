@@ -1,6 +1,7 @@
 import { Medicaments } from './../objects/Medicaments';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { MainService } from '../main.service';
+import { Prescription } from '../objects/Prescription';
 
 @Component({
   selector: 'app-sale-event',
@@ -32,12 +33,12 @@ export class SaleEventComponent implements OnInit {
   @Input() dateOfIssueR: Date;
 
   @Output() listOfAddedMedicamentsR: Array<Array<any>>= new Array();
-  // e-recepta
+
+  //erecepta
   @Input() peselPacientER: String;
   @Input() verCodeER: String;
-  // @Input()
-  // @Input()
-  // @Input()
+  @Output() loadedEPrescription: Prescription;
+  @Output() listOfAddedMedicamentsER: Array<Array<any>>= new Array();
 
   constructor(private http: MainService) {
   }
@@ -52,6 +53,13 @@ export class SaleEventComponent implements OnInit {
   //   });
   // }
 
+
+  removeMedFromListER(i) {
+    const idx = this.listOfAddedMedicamentsER.indexOf(i);
+    if (idx !== -1) {
+      return this.listOfAddedMedicamentsER.splice(idx, 1); // The second parameter is the number of elements to remove.
+    }
+  }
 
   removeMedFromList(i) {
     const idx = this.listOfAddedMedicamentsR.indexOf(i);
@@ -73,6 +81,7 @@ export class SaleEventComponent implements OnInit {
       console.log(data);
       this.listOfAddedMedicamentsR.push([data, this.quantityR]);
       this.eanCodeR = '';
+      this.quantityR = '';
     });
   }
 
@@ -91,7 +100,11 @@ export class SaleEventComponent implements OnInit {
     });
   }
 
-
+  addERecept(){
+    this.listOfAddedMedicamentsER.forEach(element => {
+      this.listOfMedicaments.push(element);
+    });
+  }
 
   addRecept(){
     // @Input() nrPrescR: String;
@@ -130,9 +143,20 @@ export class SaleEventComponent implements OnInit {
 
   }
 
-  addErecept() {
+  loadEprescription() {
     console.log(this.verCodeER);
     console.log(this.peselPacientER);
+
+    this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
+      this.loadedEPrescription = data;
+      this.loadedEPrescription.listOfPrescriptionElements.forEach(element =>{
+        this.listOfAddedMedicamentsER.push([element.medicamentId, element.quantity]);
+        console.log(element.medicamentId);
+        console.log(element.quantity);
+      });
+      this.verCodeER = '';
+      this.peselPacientER = '';
+    });
   }
 
   addWithoutRecept() {
