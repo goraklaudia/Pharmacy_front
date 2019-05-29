@@ -149,9 +149,9 @@ export class SaleEventComponent implements OnInit {
 
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.loadedEPrescription = data;
-      this.loadedEPrescription.listOfPrescriptionElements.forEach(element =>{
-        this.listOfAddedMedicamentsER.push([element.medicamentId, element.quantity]);
-        console.log(element.medicamentId);
+      this.loadedEPrescription.elements.forEach(element =>{
+        this.listOfAddedMedicamentsER.push([element.eanCode, element.quantity]);
+        console.log(element.eanCode);
         console.log(element.quantity);
       });
       this.verCodeER = '';
