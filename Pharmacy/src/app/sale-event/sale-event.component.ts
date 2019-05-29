@@ -102,6 +102,9 @@ export class SaleEventComponent implements OnInit {
 
   addERecept(){
     this.listOfAddedMedicamentsER.forEach(element => {
+      this.http.getMedicamentELeki(element[0]).subscribe(data => {
+        console.log(data);
+      });
       this.listOfMedicaments.push(element);
     });
   }
@@ -153,6 +156,7 @@ export class SaleEventComponent implements OnInit {
         this.listOfAddedMedicamentsER.push([element.eanCode, element.quantity]);
         console.log(element.eanCode);
         console.log(element.quantity);
+
       });
       this.verCodeER = '';
       this.peselPacientER = '';

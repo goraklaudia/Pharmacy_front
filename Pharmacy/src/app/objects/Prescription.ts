@@ -1,7 +1,7 @@
 import { PrescriptionElement } from "./PrescriptionElement";
 
 export class Prescription{
-    public id: String;    
+    public id: String;
     public dateOfIssue: Date;
     public dateOfFinalization: Date;
     public provider: String;

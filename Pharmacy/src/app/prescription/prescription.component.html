@@ -1,3 +1,42 @@
-<p>
-  prescription works!
-</p>
+<div class="container">
+  <div class="card card-container">
+
+    <h3 style="text-align: center">Recepty</h3> <br><br>
+
+    <div class="">
+        <label id="">&nbsp; Lista zrealizowanych recept:</label>
+        <table class="table table-bordered" id="">
+          <thead>
+            <tr style="background: lightgrey">
+              <th scope="col">Lp.</th>
+              <th scope="col">Numer recepty</th>
+              <th scope="col">Produkty</th>
+              <th scope="col">Produkty</th>
+              <th scope="col">Produkty</th>
+              <th scope="col">Data zrealizwowania</th>
+              <th scope="col" style="width: 4px;">Opcje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of listOfOrders; let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i}}</td>
+              <td>{{i}}</td>
+              <td>{{i}}</td>
+              <td>
+                <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
+                <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-reorder"></i></button>
+              </td>
+            </tr>
+
+            <!-- <tr></tr> -->
+          </tbody>
+        </table>
+        <!-- <button class = "btn btn-xs btn-primary" (click)="moveToAdd()"><i class="fa fa-plus"></i></button> -->
+      </div>
+
+<br><br><br>
+</div>
+</div>
+
+

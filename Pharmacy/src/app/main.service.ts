@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Medicaments } from './objects//Medicaments';
 import { User } from './objects/User';
 import { Login } from './objects/Login';
 import { Confirm } from './objects/Confirm';
 import { Prescription } from './objects/Prescription';
+import { Sale } from './objects/Sale';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,16 @@ export class MainService {
 
   constructor(private http: HttpClient) { }
 
+  getSale(): Observable<Sale> {
+    return this.http.get<Sale>('https://pharmacy.azurewebsites.net/api/Sales');
+
+  }
+
   getPrescription(peselPacientER: String, verCodeER: String): Observable<Prescription> {
-    return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/'+ peselPacientER + '?code=' + verCodeER);
+    // const header = new HttpHeaders({'Authorization': 'Token ' + this.token});
+    // ,  {headers: header}
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/' + peselPacientER + '?code=' + verCodeER);
   }
 
   getMedicaments(): Observable<Array<Medicaments>> {
@@ -27,6 +36,10 @@ export class MainService {
   getMedicament(eanCode: String): Observable<Medicaments> {
 
     return this.http.get<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments/' + eanCode);
+  }
+
+  getMedicamentELeki(eanCode: String): Observable<Medicaments> {
+    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/?ean=' + eanCode);
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {

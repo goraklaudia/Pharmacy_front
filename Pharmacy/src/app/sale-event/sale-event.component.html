@@ -67,7 +67,7 @@
       <div class="modal-body">
         <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL*"/> <br>
         <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacyjny*"/>
-      </div>
+<br>
 
         <table class="table table-bordered" id="">
 
@@ -80,8 +80,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let i of listOfAddedMedicamentsER;">
-            <td></td>
-            <td></td>
+            <td>{{i[0]}}</td>
+            <td>{{i[1]}}</td>
             <td>
               <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListER(i)"><i class="fa fa-trash"></i></button>
             </td>
@@ -90,8 +90,12 @@
           <!-- <tr></tr> -->
         </tbody>
       </table>
-      <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
+      <br>
+      <div style = "text-align: center">
+        <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
+      </div>
       <hr>
+    </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
         <button type="button" class="btn btn-success" (click)= "addERecept()">Zrealizuj</button>

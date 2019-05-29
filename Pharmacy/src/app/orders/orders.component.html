@@ -33,7 +33,7 @@
       </div>
 
 <br><br><br>
-<div *ngIf="showBox == true">
+<!-- <div *ngIf="showBox == true">
   <div class="container">
       <div class="card card-container">
     <h2>Numer zamówienia: {{orderToShow}}</h2>
@@ -45,13 +45,61 @@
     <div>
     <div style="width:90%; float:left;">&nbsp;</div>
     <div style="width:10%; float:left">
-        <!-- <button class = "btn btn-sm btn-danger" >Dezaktywuj</button> -->
     </div>
   </div>
     </div>
   </div>
-</div>
+</div> -->
 </div>
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="erecept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">E-recepta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" name = "peselPacientER" [(ngModel)]="peselPacientER"  class="form-control" placeholder="PESEL*"/> <br>
+        <input type="text" name = "verCodeER" [(ngModel)]="verCodeER" class="form-control" placeholder="Kod weryfikacyjny*"/>
+<br>
+
+        <table class="table table-bordered" id="">
+
+        <thead>
+          <tr style="background: lightgrey">
+            <th scope="col">Kod EAN</th>
+            <th scope="col">Ilość</th>
+            <th scope="col" style="width: 4%">Opcja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of listOfAddedMedicamentsER;">
+            <td>{{i[0]}}</td>
+            <td>{{i[1]}}</td>
+            <td>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListER(i)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+
+          <!-- <tr></tr> -->
+        </tbody>
+      </table>
+      <br>
+      <div style = "text-align: center">
+        <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
+      </div>
+      <hr>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-success" (click)= "addERecept()">Zrealizuj</button>
+      </div>
+    </div>
+  </div>
+</div>
