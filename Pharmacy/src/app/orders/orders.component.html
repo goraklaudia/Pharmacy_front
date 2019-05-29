@@ -11,18 +11,20 @@
               <th scope="col">lp.</th>
               <th scope="col">Numer zamówienia</th>
               <th scope="col">Data złożenia</th>
-              <th scope="col" style="width: 4px;">Opcje</th>
+              <th scope="col">Status</th>
+              <th scope="col" style="width: 10%">Opcje</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of listOfOrders; let j = index">
               <td>{{j+1}}</td>
-              <td>{{i}}</td>
-              <td>{{i}}</td>
-              <td>{{i}}</td>
+              <td>{{i.id}}</td>
+              <td>{{i.dateOfIssue}}</td>
+              <td>{{i.status}}</td>
               <td>
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
-                <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-reorder"></i></button>
+                &nbsp;
+                <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
 
@@ -67,6 +69,8 @@
       <div class="modal-body">
         <input type="text" name = "peselPacientER" [(ngModel)]="eanCode"  class="form-control" placeholder="Kod EAN*"/> <br>
         <input type="number" name = "verCodeER" [(ngModel)]="quantity" class="form-control" placeholder="Ilość *"/>
+        <br>
+        <input type="number" name = "verCodeER" [(ngModel)]="price" class="form-control" placeholder="Cena *"/>
 <br>
       <div style = "text-align: center">
         <button type="button" class="btn btn-info" (click)= "loadMedicaments()">Dodaj</button>
@@ -78,6 +82,7 @@
           <tr style="background: lightgrey">
             <th scope="col">Kod EAN</th>
             <th scope="col">Ilość</th>
+            <th scope="col">Cena</th>
             <th scope="col" style="width: 4%">Opcja</th>
           </tr>
         </thead>
@@ -85,6 +90,7 @@
           <tr *ngFor="let i of listOfMedicaments;">
             <td>{{i[0]}}</td>
             <td>{{i[1]}}</td>
+            <td>{{i[2]}}</td>
             <td>
               <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
             </td>

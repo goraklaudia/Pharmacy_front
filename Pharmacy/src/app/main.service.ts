@@ -7,6 +7,9 @@ import { Login } from './objects/Login';
 import { Confirm } from './objects/Confirm';
 import { Prescription } from './objects/Prescription';
 import { Sale } from './objects/Sale';
+import { ElementSale } from './objects/ElementSale';
+import { ElementJSONSale } from './objects/ElementJSONSale';
+import { Order } from './objects/Order';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,16 @@ export class MainService {
 
   getSale(): Observable<Sale> {
     return this.http.get<Sale>('https://pharmacy.azurewebsites.net/api/Sales');
+  }
 
+  postOrder(elements: ElementJSONSale): Observable<String> {
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header)
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header});
+  }
+
+  getOrder(): Observable<Array<Order>> {
+    return this.http.get<Array<Order>>('https://pharmacy.azurewebsites.net/api/Orders');
   }
 
   getPrescription(peselPacientER: String, verCodeER: String): Observable<Prescription> {
