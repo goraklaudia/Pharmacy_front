@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { MainService } from '../main.service';
 import { Prescription } from '../objects/Prescription';
 import { Sale } from '../objects/Sale';
+import { MedicamentsWithoutPre } from '../objects/MedicamentsWithoutPre';
 
 @Component({
   selector: 'app-sale-event',
@@ -13,6 +14,7 @@ export class SaleEventComponent implements OnInit {
   listOfMedicaments: Array<Array<any>> = new Array();
   parametr: Boolean;
   saleCompleated: Sale = new Sale();
+  medicamentsWithoutPre: MedicamentsWithoutPre = new MedicamentsWithoutPre();
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -197,8 +199,18 @@ export class SaleEventComponent implements OnInit {
 
   saveSale() {
     this.listOfMedicaments.forEach(element => {
+      if (element[4] === 'WR') {
+        this.medicamentsWithoutPre.eanCode = element[0];
+        this.medicamentsWithoutPre.quantity = element[2];
+        this.saleCompleated.medicamentsSoldWithoutPrescription = new Array();
+        this.saleCompleated.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
+
+      }
 
     });
+    this.http.postSale(this.saleCompleated).subscribe(data => {
+      console.log(data)
+    })
   }
 }
 

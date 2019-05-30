@@ -25,7 +25,7 @@ export class MainService {
     return this.http.get<Sale>('https://pharmacy.azurewebsites.net/api/Sales');
   }
 
-  postSale(sales): Observable<String> {
+  postSale(sales: Sale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
     console.log(header);
     return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Sales', sales,  {headers: header})
@@ -108,4 +108,5 @@ export class MainService {
   getSales(): Observable<Array<Sale>> {
     return this.http.get<Array<Sale>>('https://pharmacy.azurewebsites.net/api/Sales');
   }
+
 }
