@@ -56,11 +56,13 @@ export class SaleEventComponent implements OnInit {
   // }
 
   cleanListER(){
+    this.peselPacientER = '';
+    this.verCodeER = '';
     while (this.listOfAddedMedicamentsER.length) {
       this.listOfAddedMedicamentsER.pop();
     }
   }
-  
+
   removeMedFromListER(i) {
     const idx = this.listOfAddedMedicamentsER.indexOf(i);
     if (idx !== -1) {
@@ -115,7 +117,6 @@ export class SaleEventComponent implements OnInit {
   addERecept() {
       this.listOfAddedMedicamentsER.forEach(element => {
         this.http.getMedicamentELeki(element[0]).subscribe(data => {
-          
           this.listOfMedicaments.push([data.eanCode, element[1], element[2], element[3], element[4]]);
         });
       });
