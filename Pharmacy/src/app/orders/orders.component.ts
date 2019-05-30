@@ -99,12 +99,14 @@ export class OrdersComponent implements OnInit {
   }
 
   createOrder() {
-    this.listOfMedicaments.forEach( element => {
-      this.element.eanCode = element[0];
-      this.element.quantity = element[1];
-      this.element.price = element[2];
-      this.element.medicament = element[3];
-      this.elements.elements = new Array();
+    this.elements.elements = new Array();
+    this.listOfMedicaments.forEach( data => {
+      this.element = new OrderElement();
+      this.element.eanCode = data[0];
+      this.element.quantity = data[1];
+      this.element.price = data[2];
+      this.element.medicament = data[3];
+
       this.elements.elements.push(this.element);
     });
 

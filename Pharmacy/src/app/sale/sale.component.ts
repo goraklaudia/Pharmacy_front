@@ -10,14 +10,18 @@ import { Sale } from '../objects/Sale';
 })
 export class SaleComponent implements OnInit {
   listOfSales: Sale[] = [];
+  showBox: Boolean;
+  showSale: Sale = new Sale();
 
   constructor(private router: Router, private http: MainService) { }
 
   ngOnInit() {
+    this.showBox = false;
     if (this.http.token === '' || this.http.token === undefined) {
       this.router.navigate(['/login']);
     } else {
       this.getSale();
+
     }
   }
 
@@ -30,5 +34,11 @@ export class SaleComponent implements OnInit {
       console.log(data);
       this.listOfSales = data;
     })
+  }
+
+  showDetails(i) {
+    console.log(i)
+    this.showBox = true;
+    this.showSale = i;
   }
 }

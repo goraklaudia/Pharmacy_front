@@ -12,7 +12,7 @@
               <th scope="col">Numer zamówienia</th>
               <th scope="col">Data złożenia</th>
               <th scope="col">Status</th>
-              <th scope="col" style="width: 11%">Opcje</th>
+              <th scope="col" style="width: 11%; text-align:center">Opcje</th>
             </tr>
           </thead>
           <tbody>
@@ -21,11 +21,12 @@
               <td>{{i.id}}</td>
               <td>{{i.dateOfIssue}}</td>
               <td>{{i.status}}</td>
-              <td>
+              <td style="text-align:center">
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
                 <!-- <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder(i)"><i class="fa fa-check"></i></button> -->
                 &nbsp;
-                <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="cancelOrder(i)"><i class="fa fa-trash"></i></button>
+
+                <button class = "btn btn-xs btn-danger" *ngIf="i.status == 'created'" style="font-size: 9px" (click)="cancelOrder(i)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
 

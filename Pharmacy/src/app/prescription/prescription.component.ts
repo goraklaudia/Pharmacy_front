@@ -10,9 +10,12 @@ import { Prescription } from '../objects/Prescription';
 })
 export class PrescriptionComponent implements OnInit {
   listOfPrescription: Prescription[] = [];
+  showBox: Boolean;
+  prescriptionDetali: Prescription  = new Prescription();
   constructor(private router: Router, private http: MainService) { }
 
   ngOnInit() {
+    this.showBox = false;
     if (this.http.token === '' || this.http.token === undefined) {
       this.router.navigate(['/login']);
     } else {
@@ -27,4 +30,9 @@ export class PrescriptionComponent implements OnInit {
     })
   }
 
+  showDetails(i) {
+    console.log(i)
+    this.showBox = true;
+    this.prescriptionDetali = i;
+  }
 }

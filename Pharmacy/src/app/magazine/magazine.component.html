@@ -12,7 +12,10 @@
     </div>
     <p id="demo2" style="color: red"></p>
     <br>
-    <button class="btn btn-primary" (click)="loadAll()" type="button">Załaduj wszystkie</button>
+    <div *ngIf="btnLoadAll">
+      <button class="btn btn-primary" (click)="loadAll()" type="button">Załaduj wszystkie</button>
+    </div>
+
 
 
     <br>

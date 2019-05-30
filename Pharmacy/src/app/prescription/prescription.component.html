@@ -10,22 +10,19 @@
             <tr style="background: lightgrey">
               <th scope="col">Lp.</th>
               <th scope="col">Numer recepty</th>
-              <th scope="col">Produkty</th>
-              <th scope="col">Produkty</th>
-              <th scope="col">Produkty</th>
               <th scope="col">Data zrealizwowania</th>
+              <th scope="col">Produkty</th>
               <th scope="col" style="width: 4px;">Opcje</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of listOfPrescription; let j = index">
               <td>{{j+1}}</td>
-              <td>{{i}}</td>
-              <td>{{i}}</td>
-              <td>{{i}}</td>
+              <td>{{i.id}}</td>
+              <td>{{i.dateOfIssue}}</td>
+              <td><div *ngIf="i.elements[0] !== undefined">{{i.elements[0].eanCode}};</div></td>
               <td>
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
-                <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-reorder"></i></button>
               </td>
             </tr>
 
@@ -36,6 +33,43 @@
       </div>
 
 <br><br><br>
+<div *ngIf="showBox == true">
+  <div class="container">
+      <div class="card card-container">
+    <h2>Numer zamówienia: {{prescriptionDetali.id}}</h2>
+    <label for="">Data złożenia: {{prescriptionDetali.dateOfIssue}}</label>
+    <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
+    <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>
+    <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.surnameOfThePatient}}</label>
+    <br> <br>
+    <label id="">&nbsp; Lista leków:</label>
+    <table class="table table-bordered" id="">
+      <thead>
+        <tr style="background: lightgrey">
+          <th scope="col">Lp.</th>
+          <th scope="col">Kod EAN leku</th>
+          <th scope="col">Ilość</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of prescriptionDetali.elements; let j = index">
+          <td>{{j+1}}</td>
+          <td>{{i.eanCode}}</td>
+          <td>{{i.quantity}}</td>
+        </tr>
+
+        <!-- <tr></tr> -->
+      </tbody>
+    </table>
+    <div>
+    <div style="width:90%; float:left;">&nbsp;</div>
+    <div style="width:10%; float:left">
+        <!-- <button class = "btn btn-sm btn-danger" >Dezaktywuj</button> -->
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
 </div>
 </div>
 

@@ -39,13 +39,13 @@ export class EmployeesComponent implements OnInit {
       this.listOfUsers.pop();
     }
     this.httpMain.getUsers().subscribe((data) => {
-      // data.forEach(element => {
-      //   if(element.isActive !== false) {
-      //     this.listOfUsers.push(element);
-      //   }
-      // });
-      this.listOfUsers = data;
-      console.log( this.listOfUsers );
+      data.forEach(element => {
+        if(element.isActive !== false) {
+          this.listOfUsers.push(element);
+        }
+      });
+      // this.listOfUsers = data;
+      // console.log( this.listOfUsers );
     });
   }
 
@@ -69,6 +69,7 @@ export class EmployeesComponent implements OnInit {
       console.log(data);
       this.getEmployees();
     });
+    this.showBox = false;
   }
 
 
