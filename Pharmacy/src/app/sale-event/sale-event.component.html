@@ -81,9 +81,9 @@
         <tbody>
           <tr *ngFor="let i of listOfAddedMedicamentsER;">
             <td>{{i[0]}}</td>
-            <td>{{i[1]}}</td>
+            <td>{{i[2]}}</td>
             <td>
-              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="cleanListER()"><i class="fa fa-trash"></i></button>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListER(i)"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
 
@@ -92,12 +92,12 @@
       </table>
       <br>
       <div style = "text-align: center">
-        <button type="button" class="btn btn-info" (click)= "loadEprescription()">Pobierz e-receptę</button>
+        <button type="button" class="btn btn-info" (click)= "loadEprescription()" id = "loadEpresBtn">Pobierz e-receptę</button>
       </div>
       <hr>
     </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id = "buttonCancelER">Anuluj</button>
         <button type="button" class="btn btn-success" (click)= "addERecept()">Zrealizuj</button>
       </div>
     </div>
@@ -160,7 +160,7 @@
             <td>{{i[0].eanCode}}</td>
             <td>{{i[1]}}</td>
             <td>
-              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromList(i)"><i class="fa fa-trash"></i></button>
+              <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="removeMedFromListR(i)"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
 

@@ -4,6 +4,7 @@ import { MainService } from '../main.service';
 import { Prescription } from '../objects/Prescription';
 import { Sale } from '../objects/Sale';
 import { MedicamentsWithoutPre } from '../objects/MedicamentsWithoutPre';
+import { PrescriptionElement } from '../objects/PrescriptionElement';
 
 @Component({
   selector: 'app-sale-event',
@@ -13,9 +14,17 @@ import { MedicamentsWithoutPre } from '../objects/MedicamentsWithoutPre';
 export class SaleEventComponent implements OnInit {
   listOfMedicaments: Array<Array<any>> = new Array();
   parametr: Boolean;
-  saleCompleated: Sale = new Sale();
+  saleCompleted: Sale = new Sale();
   medicamentsWithoutPre: MedicamentsWithoutPre = new MedicamentsWithoutPre();
   medElement: Medicaments;
+
+//dodawanie sales i prescriptions dla e-prescriptions
+  listOfEprescriptions: Array<Prescription> = new Array();
+  listOfEprescriptionsElements: Array<PrescriptionElement> = new Array();
+
+
+  prescriptionElement: PrescriptionElement = new PrescriptionElement();
+
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -61,6 +70,7 @@ export class SaleEventComponent implements OnInit {
   // }
 
   cleanAllListsAndParams(){
+    document.getElementById("loadEpresBtn").removeAttribute("disabled");
     this.peselPacientER = '';
     this.verCodeER = '';
     this.parametr = false;
@@ -94,18 +104,26 @@ export class SaleEventComponent implements OnInit {
       this.listOfAddedMedicamentsWR.pop();
     }
   }
+    
+    removeMedFromListER(i) {
+      const idx = this.listOfAddedMedicamentsER.indexOf(i);
+      if (idx !== -1) {
+        return this.listOfAddedMedicamentsER.splice(idx, 1); // The second parameter is the number of elements to remove.
+      }
+    }
+    
 
-  removeMedFromListER(i) {
-    const idx = this.listOfAddedMedicamentsER.indexOf(i);
+  removeMedFromListR(i) {
+    const idx = this.listOfAddedMedicamentsR.indexOf(i);
     if (idx !== -1) {
-      return this.listOfAddedMedicamentsER.splice(idx, 1); // The second parameter is the number of elements to remove.
+      return this.listOfAddedMedicamentsR.splice(idx, 1); // The second parameter is the number of elements to remove.
     }
   }
 
   removeMedFromList(i) {
-    const idx = this.listOfAddedMedicamentsR.indexOf(i);
+    const idx = this.listOfMedicaments.indexOf(i);
     if (idx !== -1) {
-      return this.listOfAddedMedicamentsR.splice(idx, 1); // The second parameter is the number of elements to remove.
+      return this.listOfMedicaments.splice(idx, 1); // The second parameter is the number of elements to remove.
     }
   }
 
@@ -142,6 +160,7 @@ export class SaleEventComponent implements OnInit {
       this.listOfAddedMedicamentsER.forEach(element => {
           this.listOfMedicaments.push(element);
       });
+      document.getElementById('buttonCancelER').click();
   }
 
 
@@ -153,7 +172,7 @@ export class SaleEventComponent implements OnInit {
   }
 
   loadEprescription() {
-    console.log(this.listOfMedicaments);
+    // console.log(this.listOfMedicaments);
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.parametr = true;
       this.loadedEPrescription = data;
@@ -164,16 +183,14 @@ export class SaleEventComponent implements OnInit {
             let obj = [this.medElement.eanCode, this.medElement.name , element.quantity, 10, "ER", this.peselPacientER, this.verCodeER];
             if (this.listOfMedicaments.length > 0) {
               this.parametr = true;
-
-
               this.listOfMedicaments.forEach(dana =>{
 
                 if(dana[0] === obj[0]  && dana[4] === obj[4] && dana[5] === obj[5] && dana[6] === obj[6]){
-                  console.log("Already added!!");
+                  // console.log("Already added!!");
                   this.parametr = false;
                 }
                 else {
-                  console.log("Not added!!");
+                  // console.log("Not added!!");
                 }
               });
 
@@ -182,21 +199,22 @@ export class SaleEventComponent implements OnInit {
                 this.listOfAddedMedicamentsER.push(obj);
               }
               else{
-                console.log("parametr=false");
+                // console.log("parametr=false");
               }
             }
             else {
-              console.log("nicniema");
+              // console.log("nicniema");
               this.listOfAddedMedicamentsER.push(obj);
             }
           });
         }
         else {
-          console.log("SUBMITTED");
-          console.log(element.eanCode);
+          // console.log("SUBMITTED");
+          // console.log(element.eanCode);
         }
       });
     });
+    document.getElementById("loadEpresBtn").setAttribute("disabled", '');
   }
 
   addWithoutRecept() {
@@ -210,21 +228,50 @@ export class SaleEventComponent implements OnInit {
     document.getElementById('closeWR').click();
 
   }
+  // {
+  //   "provider": "string",
+  //     "nipOrRegonOfTheProvider": "string",
+  //     "nameOfThePatient": "string",
+  //     "surnameOfThePatient": "string",
+  //     "addressOfThePatient": "string",
+  //     "peselNumberOfThePatient": "string",
+  //     "nameOfTheDoctor": "string",
+  //     "surnameOfTheDoctor": "string",
+  //     "specializationOfTheDoctor": "string",
+  //     "licenseNumberOfTheDoctor": "string",
+  //     "elements": [    	  	{
+  //         "eanCode": "4444123454321",
+  //         "quantity": 2
+          
+  //       }
 
   saveSale() {
+    console.log('kupa' + this.listOfEprescriptions);
+
     this.listOfMedicaments.forEach(element => {
       if (element[4] === 'WR') {
         this.medicamentsWithoutPre.eanCode = element[0];
         this.medicamentsWithoutPre.quantity = element[2];
-        this.saleCompleated.medicamentsSoldWithoutPrescription = new Array();
-        this.saleCompleated.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
-
+        this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
+        this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
       }
-
+      else if (element[4] === 'ER') {
+        this.http.getPrescription(element[5],element[6]).subscribe( pres =>{
+          if(this.listOfEprescriptions.indexOf(pres)!==-1){
+            console.log('jest prescipson ^^');
+            console.log(pres)
+            
+          }
+          else{
+            console.log('ni ma prescription :P');
+            this.listOfEprescriptions.push(pres);
+          }
+        });
+      }
     });
-    this.http.postSale(this.saleCompleated).subscribe(data => {
-      console.log(data)
-    })
+    // this.http.postSale(this.saleCompleted).subscribe(data => {
+    //   console.log(data)
+    // })
   }
 }
 
