@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Medicaments } from './objects//Medicaments';
 import { User } from './objects/User';
 import { Login } from './objects/Login';
@@ -27,9 +27,13 @@ export class MainService {
   postOrder(elements: ElementJSONSale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
     console.log(header)
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header});
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
+    // .pipe(catchError(e=>throwError(this.errorHandler(e))));
   }
 
+  errorHandler(e) {
+    console.log(e)
+  }
   getOrder(): Observable<Array<Order>> {
     return this.http.get<Array<Order>>('https://pharmacy.azurewebsites.net/api/Orders');
   }
@@ -51,7 +55,7 @@ export class MainService {
   }
 
   getMedicamentELeki(eanCode: String): Observable<Medicaments> {
-    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/' + eanCode);
+    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/?ean=' + eanCode);
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {

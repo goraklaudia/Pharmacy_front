@@ -74,8 +74,30 @@ export class OrdersComponent implements OnInit {
     this.http.postOrder(this.elements).subscribe(data => {
       console.log(data);
       this.getOrders();
+    }, error => {
+      console.log(error)
     });
+
   }
+
+//   {
+//     "elements": [
+//         {
+//             "eanCode": "00191778013054",
+//             "medicament": {
+//                 "name": "Invanz",
+//                 "eanCode": "00191778013054",
+//                 "isRefunded": true,
+//                 "percentageOfRefund": 5,
+//                 "sellingPrice": 30,
+//                 "quantity": 0,
+//                 "comment": "string"
+//             },
+//             "quantity": 25,
+//             "price": 10
+//         }
+//     ]
+// }
 
   getOrders() {
     this.http.getOrder().subscribe(data2 => {
