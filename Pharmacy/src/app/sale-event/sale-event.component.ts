@@ -13,6 +13,7 @@ export class SaleEventComponent implements OnInit {
   listOfMedicaments: Array<Array<any>> = new Array();
   parametr: Boolean;
   saleCompleated: Sale = new Sale();
+  medElement: Medicaments;
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -57,11 +58,38 @@ export class SaleEventComponent implements OnInit {
   //   });
   // }
 
-  cleanListER(){
+  cleanAllListsAndParams(){
     this.peselPacientER = '';
     this.verCodeER = '';
+    this.parametr = false;
+    this.medElement = null;
+    this.eanCodeWR = '';
+    this.quantityWR = '';
+    this.nrPrescR = '';
+    this.namePoviderR = '';
+    this.nrNIPR = '';
+    this.namePacientR = '';
+    this.surnamePacientR = '';
+    this.adresPacientR = '';
+    this.peselPatientR = '';
+    this.eanCodeR = '';
+    this.quantityR = '';
+    this.nameDoctorR = '';
+    this.surnameDoctorR = '';
+    this.specializationDoctorR = '';
+    this.licenseNumberOfTheDoctorR = '';
+    this.dateOfFinalizationR = null;
+    this.dateOfIssueR = null;
+    this.loadedEPrescription = null;
+   
     while (this.listOfAddedMedicamentsER.length) {
       this.listOfAddedMedicamentsER.pop();
+    }
+    while (this.listOfAddedMedicamentsR.length) {
+      this.listOfAddedMedicamentsR.pop();
+    }
+    while (this.listOfAddedMedicamentsWR.length) {
+      this.listOfAddedMedicamentsWR.pop();
     }
   }
 
@@ -85,7 +113,6 @@ export class SaleEventComponent implements OnInit {
       return this.listOfAddedMedicamentsWR.splice(idx, 1); // The second parameter is the number of elements to remove.
     }
   }
-
 
   addMedicamentToList() {
     console.log(this.eanCodeR);
@@ -111,62 +138,49 @@ export class SaleEventComponent implements OnInit {
 
   addERecept() {
       this.listOfAddedMedicamentsER.forEach(element => {
-        this.http.getMedicamentELeki(element[0]).subscribe(data => {
-          this.listOfMedicaments.push([data.eanCode, element[1], element[2], element[3], element[4]]);
-        });
+          this.listOfMedicaments.push(element);
       });
   }
 
 
 
   addRecept() {
-
-    console.log(this.nrPrescR)
-    console.log(this.namePoviderR)
-    console.log(this.nrNIPR)
-    console.log(this.namePacientR)
-    console.log(this.surnamePacientR)
-    console.log(this.adresPacientR)
-    console.log(this.peselPatientR)
-    console.log(this.eanCodeR)
-    console.log(this.nameDoctorR)
-    console.log(this.surnameDoctorR)
-    console.log(this.specializationDoctorR)
-    console.log(this.licenseNumberOfTheDoctorR)
-    console.log(this.licenseNumberOfTheDoctorR)
-    console.log(this.dateOfFinalizationR)
-    console.log(this.dateOfIssueR)
-
     this.listOfAddedMedicamentsR.forEach(element => {
       this.listOfMedicaments.push([element[0], element[1], "R", "", ""]);
     });
-
   }
 
   loadEprescription() {
-    this.parametr = false;
+    console.log(this.listOfMedicaments);
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
+      this.parametr = true;
       this.loadedEPrescription = data;
       this.loadedEPrescription.elements.forEach(element => {
         if (element.isSubmitted == false) {
-          let medElement: Medicaments;
-          this.http.getMedicamentELeki(element.eanCode).subscribe(data1 => {
-            medElement = data1;
-            let obj = [medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER];
-            console.log(obj);
+          this.http.getMedicamentELeki(element.eanCode).subscribe(dataMed => {
+            this.medElement = dataMed;
+            let obj = [this.medElement.eanCode, this.medElement.name , element.quantity, 10, "ER", this.peselPacientER, this.verCodeER];
             if (this.listOfMedicaments.length > 0) {
-              this.listOfMedicaments.forEach(element =>{
-                if(element[0] === obj && element[1] === obj[1] && element[2] === obj[2] && element[3] === obj[3] && element[4] === obj[4]){
+              this.parametr = true;
+              
+              
+              this.listOfMedicaments.forEach(dana =>{
+                
+                if(dana[0] === obj[0]  && dana[4] === obj[4] && dana[5] === obj[5] && dana[6] === obj[6]){
                   console.log("Already added!!");
+                  this.parametr = false;
                 }
                 else {
-                  console.log("ifek");
-                  this.parametr = true;
+                  console.log("Not added!!");
                 }
               });
+              
               if(this.parametr === true)
               {
                 this.listOfAddedMedicamentsER.push(obj);
+              }
+              else{
+                console.log("parametr=false");
               }
             }
             else {
