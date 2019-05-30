@@ -53,7 +53,7 @@
       </table>
 
       <br><br>
-      <button type="button" class="btn btn-success">Zatwierdź</button>
+      <button type="button" class="btn btn-success" (click)="saveSale()">Zatwierdź</button>
 
     </div>
 </div>
@@ -147,7 +147,7 @@
             <!-- <div *ngIf="name.errors.minlength">
               Kod EAN musi posiadać 14 cyfr
             </div> -->
-            <input type="number" name='quantityR' [(ngModel)]="quantityR" required minlength="13" maxlength="13" id="eanCodeR" class="form-control" placeholder="Ilość" required>
+            <input type="number" name='quantityR' [(ngModel)]="quantityR" required minlength="14" maxlength="14" id="eanCodeR" class="form-control" placeholder="Ilość" required>
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToList()"><i class="fa fa-plus"></i></button>
             </div>
@@ -210,8 +210,8 @@
       </div>
       <div class="modal-body">
           <div class="input-group mb-3">
-            <input type="text" name='eanCode' [(ngModel)]="eanCodeWR" required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Kod EAN*">
-            <input type="number" name='quantityWR' [(ngModel)]="quantityWR" required minlength="13" maxlength="13" id="eanCode" class="form-control" placeholder="Ilość">
+            <input type="text" name='eanCode' [(ngModel)]="eanCodeWR" required minlength="14" maxlength="14" id="eanCode" class="form-control" placeholder="Kod EAN*">
+            <input type="number" name='quantityWR' [(ngModel)]="quantityWR" required minlength="14" maxlength="14" id="eanCode" class="form-control" placeholder="Ilość">
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToListWR()"><i class="fa fa-plus"></i></button>
             </div>

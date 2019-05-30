@@ -25,6 +25,13 @@ export class MainService {
     return this.http.get<Sale>('https://pharmacy.azurewebsites.net/api/Sales');
   }
 
+  postSale(sales): Observable<String> {
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header);
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Sales', sales,  {headers: header})
+
+  }
+
   postOrder(elements: ElementJSONSale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
     console.log(header);
@@ -62,7 +69,9 @@ export class MainService {
   }
 
   getMedicamentELeki(eanCode: String): Observable<Medicaments> {
-    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments/?ean=' + eanCode);
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header);
+    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments?ean=' + eanCode,  {headers: header});
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {

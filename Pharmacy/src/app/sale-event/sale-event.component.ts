@@ -2,6 +2,7 @@ import { Medicaments } from './../objects/Medicaments';
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { MainService } from '../main.service';
 import { Prescription } from '../objects/Prescription';
+import { Sale } from '../objects/Sale';
 
 @Component({
   selector: 'app-sale-event',
@@ -11,6 +12,7 @@ import { Prescription } from '../objects/Prescription';
 export class SaleEventComponent implements OnInit {
   listOfMedicaments: Array<Array<any>> = new Array();
   parametr: Boolean;
+  saleCompleated: Sale = new Sale();
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -48,14 +50,6 @@ export class SaleEventComponent implements OnInit {
   ngOnInit() {
   }
 
-  // getMedicamentsList() {
-  //   this.http.getMedicaments().subscribe(data => {
-  //     console.log(data);
-  //     this.listOfMedicaments = data;
-  //   });
-  // }
-
-
   removeMedFromListER(i) {
     const idx = this.listOfAddedMedicamentsER.indexOf(i);
     if (idx !== -1) {
@@ -89,11 +83,6 @@ export class SaleEventComponent implements OnInit {
   }
 
   addMedicamentToListWR() {
-    // console.log(this.eanCodeWR);
-    // this.listOfAddedMedicamentsWR.push([this.eanCodeWR, this.quantityWR]);
-    // this.eanCodeWR = '';
-    // this.quantityWR = '';
-
     console.log(this.eanCodeWR);
 
     this.http.getMedicamentELeki(this.eanCodeWR).subscribe(data => {
@@ -102,16 +91,14 @@ export class SaleEventComponent implements OnInit {
       this.eanCodeWR = '';
       this.quantityWR = '';
     });
-    // this.http.getMedicament(this.eanCodeWR).subscribe(data => {
 
-    // });
   }
 
   addERecept() {
     const promise = new Promise((resolve, reject) => {
       this.listOfAddedMedicamentsER.forEach(element => {
         this.http.getMedicamentELeki(element[0]).subscribe(data => {
-          
+
           this.listOfMedicaments.push([data.eanCode, element[1], "ER", element[3], element[4]]);
         });
       });
@@ -123,7 +110,7 @@ export class SaleEventComponent implements OnInit {
 
     console.log("coss" + this.listOfMedicaments);
     console.log("listt" + this.listOfAddedMedicamentsER);
-    
+
     console.log("drugiecoss" + this.listOfMedicaments);
     console.log("trzeecie" + this.listOfAddedMedicamentsER);
     while (this.listOfAddedMedicamentsER.length) {
@@ -192,7 +179,7 @@ export class SaleEventComponent implements OnInit {
               //   console.log("Already added!!");
               // }
               // else {
-                
+
               //   this.listOfAddedMedicamentsER.push(obj);
               // }
             }
@@ -212,13 +199,22 @@ export class SaleEventComponent implements OnInit {
 
   addWithoutRecept() {
     console.log(this.eanCodeWR);
-
     this.listOfAddedMedicamentsWR.forEach(element => {
-      this.listOfMedicaments.push([element[0], element[1], "WR", "", ""]);
+      console.log(element)
+      const random = Math.floor(Math.random() * 20);
+      this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1], random, "WR", "", ""]);
+
     });
-    
     document.getElementById('closeWR').click();
 
   }
 
+  saveSale() {
+    this.listOfMedicaments.forEach(element => {
+
+    });
+  }
 }
+
+
+
