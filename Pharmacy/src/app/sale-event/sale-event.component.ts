@@ -10,6 +10,7 @@ import { Prescription } from '../objects/Prescription';
 })
 export class SaleEventComponent implements OnInit {
   listOfMedicaments: Array<Array<any>> = new Array();
+  parametr: Boolean;
   //bez recepty
   @Input() eanCodeWR: String;
   @Input() quantityWR: String;
@@ -107,17 +108,27 @@ export class SaleEventComponent implements OnInit {
   }
 
   addERecept() {
-    this.listOfAddedMedicamentsER.forEach(element => {
-      this.http.getMedicamentELeki(element[0].eanCode).subscribe(data => {
-        console.log(data);
-        this.listOfMedicaments.push([data, element[1], "ER", "", ""]);
+    const promise = new Promise((resolve, reject) => {
+      this.listOfAddedMedicamentsER.forEach(element => {
+        this.http.getMedicamentELeki(element[0]).subscribe(data => {
+          
+          this.listOfMedicaments.push([data.eanCode, element[1], "ER", element[3], element[4]]);
+        });
       });
+      resolve(this.listOfMedicaments);
+    })
+    .then(data5 =>{
+      console.log("promise" + data5);
     });
-    console.log(this.listOfMedicaments)
-    while ( this.listOfAddedMedicamentsER.length) {
+
+    console.log("coss" + this.listOfMedicaments);
+    console.log("listt" + this.listOfAddedMedicamentsER);
+    
+    console.log("drugiecoss" + this.listOfMedicaments);
+    console.log("trzeecie" + this.listOfAddedMedicamentsER);
+    while (this.listOfAddedMedicamentsER.length) {
       this.listOfAddedMedicamentsER.pop();
     }
-
   }
 
   addRecept() {
@@ -144,55 +155,60 @@ export class SaleEventComponent implements OnInit {
 
   }
 
-
-//   arraysIdentical(a, b) {
-//     var i = a.length;
-//     if (i != b.length) return false;
-//     while (i--) {
-//         if (a[i] !== b[i]) return false;
-//     }
-//     return true;
-// };
-
-
   loadEprescription() {
+    this.parametr = false;
     console.log(this.verCodeER);
     console.log(this.peselPacientER);
-
+    console.log("listamed" + this.listOfMedicaments);
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.loadedEPrescription = data;
-
       this.loadedEPrescription.elements.forEach(element => {
         if (element.isSubmitted == false) {
           let medElement: Medicaments;
-          this.http.getMedicamentELeki(element.eanCode).subscribe(data => {
-            medElement = data;
-            // console.log(medElement);
-            if(this.listOfMedicaments.length > 0) {                
-                console.log(this.listOfMedicaments.indexOf([medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER]))
-                if (this.listOfMedicaments.indexOf([medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER]) !== -1) {
+          this.http.getMedicamentELeki(element.eanCode).subscribe(data1 => {
+            medElement = data1;
+            let obj = [medElement.eanCode, element.quantity, "ER", this.peselPacientER, this.verCodeER];
+            console.log(obj);
+            if (this.listOfMedicaments.length > 0) {
+              console.log("COSJEST");
+              console.log("obj" + obj[3]);
+              console.log("obj" + obj[4]);
+              console.log("obj" + this.listOfMedicaments);
+              console.log(this.listOfMedicaments.indexOf(obj));
+              this.listOfMedicaments.forEach(element =>{
+                if(element[0] === obj[0] && element[1] === obj[1] && element[2] === obj[2] && element[3] === obj[3] && element[4] === obj[4]){
                   console.log("Already added!!");
                 }
                 else {
-                  console.log("DUPA");
-                  this.listOfAddedMedicamentsER.push([medElement, element.quantity,"ER", this.peselPacientER, this.verCodeER]);
+                  console.log("ifek");
+                  this.parametr = true;
                 }
-            } else {
-              this.listOfAddedMedicamentsER.push([medElement, element.quantity,"ER", this.peselPacientER, this.verCodeER]);
+              });
+              if(this.parametr === true)
+              {
+                this.listOfAddedMedicamentsER.push(obj);
+              }
+              // if (this.listOfMedicaments.indexOf(obj) !== -1) {
+              //   console.log("Already added!!");
+              // }
+              // else {
+                
+              //   this.listOfAddedMedicamentsER.push(obj);
+              // }
+            }
+            else {
+              console.log("nicniema");
+              this.listOfAddedMedicamentsER.push(obj);
             }
           });
         }
         else {
           console.log("SUBMITTED");
           console.log(element.eanCode);
-        }      
+        }
+      });
     });
-  });
-  console.log(this.listOfAddedMedicamentsER);
-  this.verCodeER = '';
-  this.peselPacientER = '';
-
-}
+  }
 
   addWithoutRecept() {
     console.log(this.eanCodeWR);
@@ -200,7 +216,7 @@ export class SaleEventComponent implements OnInit {
     this.listOfAddedMedicamentsWR.forEach(element => {
       this.listOfMedicaments.push([element[0], element[1], "WR", "", ""]);
     });
-
+    
     document.getElementById('closeWR').click();
 
   }
