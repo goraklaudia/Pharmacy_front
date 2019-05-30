@@ -12,7 +12,7 @@
               <th scope="col">Numer zamówienia</th>
               <th scope="col">Data złożenia</th>
               <th scope="col">Status</th>
-              <th scope="col" style="width: 10%">Opcje</th>
+              <th scope="col" style="width: 11%">Opcje</th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +23,7 @@
               <td>{{i.status}}</td>
               <td>
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
+                <!-- <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder(i)"><i class="fa fa-check"></i></button> -->
                 &nbsp;
                 <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-trash"></i></button>
               </td>
@@ -35,15 +36,35 @@
       </div>
 
 <br><br><br>
-<!-- <div *ngIf="showBox == true">
+<div *ngIf="showBoxDetails == true">
   <div class="container">
       <div class="card card-container">
-    <h2>Numer zamówienia: {{orderToShow}}</h2>
-    <label for="">Imię: {{orderToShow}}</label>
-    <label for="">Nazwisko: {{orderToShow}} </label>
-    <label for="">Email: {{orderToShow}}</label>
-    <label for="">Hasło: {{orderToShow}}</label>
+    <h2>Numer zamówienia: {{orderToShow.id}}</h2>
+    <label for="">Data zrealizowania: {{orderToShow.dateOfIssue}}</label>
+    <label for="">Status: {{orderToShow.status}} </label>
     <br>
+    <label for="">Leki: </label>
+    <table class="table table-bordered" id="">
+        <thead>
+          <tr style="background: lightgrey">
+            <th scope="col">lp.</th>
+            <th scope="col">Kod EAN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of orderToShow.elements; let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.eanCode}}</td>
+          </tr>
+
+          <!-- <tr></tr> -->
+        </tbody>
+      </table>
+    <br>
+    <div *ngIf="orderToShow.status == 'created'">
+      <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder()">Zatwierdź odbiór <i class="fa fa-check"></i></button>
+    </div>
+<br>
     <div>
     <div style="width:90%; float:left;">&nbsp;</div>
     <div style="width:10%; float:left">
@@ -51,7 +72,7 @@
   </div>
     </div>
   </div>
-</div> -->
+</div>
 </div>
 </div>
 
@@ -61,21 +82,42 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">E-recepta</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Zamówienie</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <label>Lek był już dodany</label>
         <input type="text" name = "peselPacientER" [(ngModel)]="eanCode"  class="form-control" placeholder="Kod EAN*"/> <br>
-        <input type="number" name = "verCodeER" [(ngModel)]="quantity" class="form-control" placeholder="Ilość *"/>
-        <br>
-        <input type="number" name = "verCodeER" [(ngModel)]="price" class="form-control" placeholder="Cena *"/>
-<br>
-      <div style = "text-align: center">
-        <button type="button" class="btn btn-info" (click)= "loadMedicaments()">Dodaj</button>
-      </div>
 
+      <input type="number" name = "verCodeER" [(ngModel)]="quantity" class="form-control" placeholder="Ilość *"/>
+        <br>
+      <input type="number" name = "verCodeER" [(ngModel)]="price" class="form-control" placeholder="Cena *"/>
+        <br>
+        <div style="color: red">{{msg}}</div>
+        <br>
+        <div style = "text-align: center">
+            <button type="button" class="btn btn-info" (click)= "checkIfIsInMagazine()">Sprawdź na magazynie</button>
+          </div>
+          <br>
+        <hr>
+        <div *ngIf="showBox">
+        <label>Dodatkowe dane do leku</label>
+        <input type="text" name = "peselPacientER" [(ngModel)]="nameMedicament"  class="form-control" placeholder="Nazwa leku"/> <br>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="isRefunded" [ngModelOptions]="{standalone: true}">
+            <label class="form-check-label" for="exampleCheck1">Refundacja*</label>
+          </div><br>
+        <input type="number" name = "peselPacientER" [(ngModel)]="percentageOfRefund"  class="form-control" placeholder="Kod EAN"/> <br>
+
+        </div>
+<br>
+
+      <div style = "text-align: center">
+        <button type="button" class="btn btn-success" (click)= "loadMedicaments()">Dodaj</button>
+      </div>
+<br><br>
         <table class="table table-bordered" id="">
 
         <thead>
@@ -84,6 +126,7 @@
             <th scope="col">Ilość</th>
             <th scope="col">Cena</th>
             <th scope="col" style="width: 4%">Opcja</th>
+            <hr>
           </tr>
         </thead>
         <tbody>

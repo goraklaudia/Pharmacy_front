@@ -26,9 +26,14 @@ export class MainService {
 
   postOrder(elements: ElementJSONSale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header)
+    console.log(header);
     return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
-    // .pipe(catchError(e=>throwError(this.errorHandler(e))));
+  }
+
+  putOrder(elements: Order): Observable<String> {
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header);
+    return this.http.put<String>('https://pharmacy.azurewebsites.net/api/Orders/' + elements.id, elements,  {headers: header})
   }
 
   errorHandler(e) {
@@ -39,9 +44,6 @@ export class MainService {
   }
 
   getPrescription(peselPacientER: String, verCodeER: String): Observable<Prescription> {
-    // const header = new HttpHeaders({'Authorization': 'Token ' + this.token});
-    // ,  {headers: header}
-    // tslint:disable-next-line:max-line-length
     return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/' + peselPacientER + '?code=' + verCodeER);
   }
 
