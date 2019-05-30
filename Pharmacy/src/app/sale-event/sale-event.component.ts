@@ -28,17 +28,18 @@ export class SaleEventComponent implements OnInit {
   @Input() nameDoctorR: String;
   @Input() surnameDoctorR: String;
   @Input() specializationDoctorR: String;
-  @Input() licenseNumberOfTheDoctorR:String;
+  @Input() licenseNumberOfTheDoctorR: String;
   @Input() dateOfFinalizationR: Date;
   @Input() dateOfIssueR: Date;
 
-  @Output() listOfAddedMedicamentsR: Array<Array<any>>= new Array();
+  @Output() listOfAddedMedicamentsR: Array<Array<any>> = new Array();
 
   //erecepta
   @Input() peselPacientER: String;
   @Input() verCodeER: String;
   @Output() loadedEPrescription: Prescription;
-  @Output() listOfAddedMedicamentsER: Array<Array<any>>= new Array();
+  @Output() listOfAddedMedicamentsER: Array<Array<any>> = new Array();
+  // isSubmited:
 
   constructor(private http: MainService) {
   }
@@ -75,7 +76,8 @@ export class SaleEventComponent implements OnInit {
     }
   }
 
-  addMedicamentToList(){
+
+  addMedicamentToList() {
     console.log(this.eanCodeR);
     this.http.getMedicament(this.eanCodeR).subscribe(data => {
       console.log(data);
@@ -85,7 +87,7 @@ export class SaleEventComponent implements OnInit {
     });
   }
 
-  addMedicamentToListWR(){
+  addMedicamentToListWR() {
     // console.log(this.eanCodeWR);
     // this.listOfAddedMedicamentsWR.push([this.eanCodeWR, this.quantityWR]);
     // this.eanCodeWR = '';
@@ -104,32 +106,22 @@ export class SaleEventComponent implements OnInit {
     // });
   }
 
-  addERecept(){
+  addERecept() {
     this.listOfAddedMedicamentsER.forEach(element => {
-      this.http.getMedicamentELeki(element[0]).subscribe(data => {
+      this.http.getMedicamentELeki(element[0].eanCode).subscribe(data => {
         console.log(data);
-        this.listOfMedicaments.push([data, element[1]]);
+        this.listOfMedicaments.push([data, element[1], "ER", "", ""]);
       });
     });
-
+    console.log(this.listOfMedicaments)
+    while ( this.listOfAddedMedicamentsER.length) {
+      this.listOfAddedMedicamentsER.pop();
+    }
 
   }
 
-  addRecept(){
-    // @Input() nrPrescR: String;
-    // @Input() namePoviderR: String;
-    // @Input() nrNIPR: String;
-    // @Input() namePacientR: String;
-    // @Input() surnamePacientR: String;
-    // @Input() adresPacientR: String;
-    // @Input() peselPatientR: String;
-    // @Input() eanCodeR: String;
-    // @Input() nameDoctorR: String;
-    // @Input() surnameDoctorR: String;
-    // @Input() specializationDoctorR: String;
-    // @Input() licenseNumberOfTheDoctorR:String;
-    // @Input() dateOfFinalizationR: Date;
-    // @Input() dateOfIssueR: Date;
+  addRecept() {
+
     console.log(this.nrPrescR)
     console.log(this.namePoviderR)
     console.log(this.nrNIPR)
@@ -147,10 +139,21 @@ export class SaleEventComponent implements OnInit {
     console.log(this.dateOfIssueR)
 
     this.listOfAddedMedicamentsR.forEach(element => {
-      this.listOfMedicaments.push(element);
+      this.listOfMedicaments.push([element[0], element[1], "R", "", ""]);
     });
 
   }
+
+
+//   arraysIdentical(a, b) {
+//     var i = a.length;
+//     if (i != b.length) return false;
+//     while (i--) {
+//         if (a[i] !== b[i]) return false;
+//     }
+//     return true;
+// };
+
 
   loadEprescription() {
     console.log(this.verCodeER);
@@ -158,22 +161,44 @@ export class SaleEventComponent implements OnInit {
 
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.loadedEPrescription = data;
-      this.loadedEPrescription.elements.forEach(element =>{
-        this.listOfAddedMedicamentsER.push([element.eanCode, element.quantity]);
-        console.log(element.eanCode);
-        console.log(element.quantity);
 
-      });
-      this.verCodeER = '';
-      this.peselPacientER = '';
+      this.loadedEPrescription.elements.forEach(element => {
+        if (element.isSubmitted == false) {
+          let medElement: Medicaments;
+          this.http.getMedicamentELeki(element.eanCode).subscribe(data => {
+            medElement = data;
+            // console.log(medElement);
+            if(this.listOfMedicaments.length > 0) {                
+                console.log(this.listOfMedicaments.indexOf([medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER]))
+                if (this.listOfMedicaments.indexOf([medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER]) !== -1) {
+                  console.log("Already added!!");
+                }
+                else {
+                  console.log("DUPA");
+                  this.listOfAddedMedicamentsER.push([medElement, element.quantity,"ER", this.peselPacientER, this.verCodeER]);
+                }
+            } else {
+              this.listOfAddedMedicamentsER.push([medElement, element.quantity,"ER", this.peselPacientER, this.verCodeER]);
+            }
+          });
+        }
+        else {
+          console.log("SUBMITTED");
+          console.log(element.eanCode);
+        }      
     });
-  }
+  });
+  console.log(this.listOfAddedMedicamentsER);
+  this.verCodeER = '';
+  this.peselPacientER = '';
+
+}
 
   addWithoutRecept() {
     console.log(this.eanCodeWR);
 
     this.listOfAddedMedicamentsWR.forEach(element => {
-      this.listOfMedicaments.push(element);
+      this.listOfMedicaments.push([element[0], element[1], "WR", "", ""]);
     });
 
     document.getElementById('closeWR').click();
