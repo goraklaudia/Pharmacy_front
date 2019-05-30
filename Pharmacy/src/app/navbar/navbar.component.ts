@@ -9,10 +9,14 @@ import { MainService } from '../main.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private http: MainService, private router: Router) { }
+  access: Boolean;
+  constructor(private http: MainService, private router: Router) {
+    this.access = false;
+  }
 
   ngOnInit() {
     console.log(this.http.token)
+
   }
 
   logout() {
@@ -29,5 +33,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  checkRole() {
+    if (this.http.access === 'admin') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }

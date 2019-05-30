@@ -7,6 +7,7 @@ import { ElementJSONSale } from '../objects/ElementJSONSale';
 import { OrderElement } from '../objects/OrderElement';
 import { HttpHeaders } from '@angular/common/http';
 import { Medicaments } from '../objects/Medicaments';
+import { User } from '../objects/User';
 
 @Component({
   selector: 'app-orders',
@@ -31,6 +32,7 @@ export class OrdersComponent implements OnInit {
   @Input() isRefunded: Boolean;
   @Input() nameMedicament: String;
   @Output() msg: String;
+  pharmacistOrder: User;
 
 
   constructor(private router: Router, private http: MainService) {
@@ -49,8 +51,13 @@ export class OrdersComponent implements OnInit {
 
   }
 
-  reciveedOrder(i: Order) {
+  cancelOrder(i: Order) {
     console.log(i);
+    console.log(i.id)
+    this.http.deleteOrder(i.id).subscribe(data => {
+      console.log(data);
+      this.getOrders();
+    });
   }
 
   completedOrder() {
@@ -65,7 +72,10 @@ export class OrdersComponent implements OnInit {
     console.log(i);
     this.showBoxDetails = true;
     this.orderToShow = i;
+    // this.http.
   }
+
+
 
   loadMedicaments() {
     if (this.showBox === true) {

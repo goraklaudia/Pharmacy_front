@@ -17,6 +17,7 @@ import { Order } from './objects/Order';
 export class MainService {
   email: String;
   token: String;
+  access: String;
 
   constructor(private http: HttpClient) { }
 
@@ -36,9 +37,13 @@ export class MainService {
     return this.http.put<String>('https://pharmacy.azurewebsites.net/api/Orders/' + elements.id, elements,  {headers: header})
   }
 
-  errorHandler(e) {
-    console.log(e)
+  deleteOrder(elements: String): Observable<String> {
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header);
+    return this.http.delete<String>('https://pharmacy.azurewebsites.net/api/Orders/' + elements, {headers: header})
   }
+
+
   getOrder(): Observable<Array<Order>> {
     return this.http.get<Array<Order>>('https://pharmacy.azurewebsites.net/api/Orders');
   }
@@ -82,4 +87,16 @@ export class MainService {
     return this.http.get<Array<User>>('https://pharmacy.azurewebsites.net/api/Users');
   }
 
+  getUserByEmail(email: String): Observable<User> {
+    return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+email);
+
+  }
+
+  getPrescriptions(): Observable<Array<Prescription>> {
+    return this.http.get<Array<Prescription>>('https://pharmacy.azurewebsites.net/api/Prescriptions');
+  }
+
+  getSales(): Observable<Array<Sale>> {
+    return this.http.get<Array<Sale>>('https://pharmacy.azurewebsites.net/api/Sales');
+  }
 }
