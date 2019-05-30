@@ -9,12 +9,12 @@
             <thead>
               <tr style="background: lightgrey">
                 <th scope="col">lp.</th>
-                <th scope="col">Imię</th>
-                <th scope="col">Nazwisko</th>
-                <th scope="col">Email</th>
+                <th scope="col">Imię: </th>
+                <th scope="col">Nazwisko: </th>
+                <th scope="col">Email: </th>
                 <!-- <th scope="col">Wykształcenie</th>
                 <th scope="col">PESEL</th> -->
-                <th scope="col">Rola</th>
+                <th scope="col">Rola: </th>
                 <th scope="col" style="width: 4px;">Opcja</th>
               </tr>
             </thead>
@@ -43,7 +43,9 @@
       <label for="">Imię: {{showName}}</label>
       <label for="">Nazwisko: {{showSurName}} </label>
       <label for="">Email: {{showEmail}}</label>
-      <label for="">Hasło: {{showPassword}}</label>
+      <label for="">Status: {{showAct}}</label>
+
+      <label *ngIf="showEduc !== null">Zawód: {{showEduc}}</label>
       <br>
       <div>
       <div style="width:90%; float:left;">&nbsp;</div>

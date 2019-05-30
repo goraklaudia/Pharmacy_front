@@ -25,7 +25,7 @@
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
                 <!-- <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder(i)"><i class="fa fa-check"></i></button> -->
                 &nbsp;
-                <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="reciveedOrder(i)"><i class="fa fa-trash"></i></button>
+                <button class = "btn btn-xs btn-danger" style="font-size: 9px" (click)="cancelOrder(i)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
 
@@ -49,12 +49,14 @@
           <tr style="background: lightgrey">
             <th scope="col">lp.</th>
             <th scope="col">Kod EAN</th>
+            <th scope="col">Ilość</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let i of orderToShow.elements; let j = index">
             <td>{{j+1}}</td>
             <td>{{i.eanCode}}</td>
+            <td>{{i.quantity}}</td>
           </tr>
 
           <!-- <tr></tr> -->
@@ -109,7 +111,7 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="isRefunded" [ngModelOptions]="{standalone: true}">
             <label class="form-check-label" for="exampleCheck1">Refundacja*</label>
           </div><br>
-        <input type="number" name = "peselPacientER" [(ngModel)]="percentageOfRefund"  class="form-control" placeholder="Kod EAN"/> <br>
+        <input type="number" name = "peselPacientER" [(ngModel)]="percentageOfRefund"  class="form-control" placeholder="Procent refundacji"/> <br>
 
         </div>
 <br>

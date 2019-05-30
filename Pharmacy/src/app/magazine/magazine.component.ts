@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 import { Medicaments } from '../objects/Medicaments';
@@ -9,8 +9,10 @@ import { Medicaments } from '../objects/Medicaments';
   styleUrls: ['./magazine.component.css']
 })
 export class MagazineComponent implements OnInit {
-
-  listOfMedicaments: Medicaments[] = []
+  @Input() nameSearch: String;
+  listOfMedicaments: Medicaments[] = [];
+  tmpListSearch: Medicaments[] = [];
+  btnLoadAll: Boolean;
   constructor(private router: Router, private httpMain: MainService) { }
 
   ngOnInit() {
@@ -18,6 +20,7 @@ export class MagazineComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.getMedicamentsList();
+    this.btnLoadAll = false;
   }
 
   getMedicamentsList() {
@@ -29,6 +32,25 @@ export class MagazineComponent implements OnInit {
 
   gotToAdd(){
     this.router.navigate(['/addmedicaments']);
+  }
+
+  search() {
+    this.btnLoadAll = true;
+
+    this.listOfMedicaments.forEach(element => {
+      console.log("tu")
+      if (element.name === this.nameSearch) {
+        this.tmpListSearch.push(element);
+      }
+    });
+  }
+
+  loadAll() {
+    this.btnLoadAll = false;
+    while (this.tmpListSearch.length) {
+      this.tmpListSearch.pop();
+    }
+    // this.getMedicamentsList();
   }
 
 }

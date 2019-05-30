@@ -78,7 +78,7 @@
         <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/orders']" routerLinkActive="router-link-active">Zamówienia </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/employees']" routerLinkActive="router-link-active">Pracownicy </a>
+        <a class="nav-link" *ngIf="checkIfIsLog()==true && checkRole() == true" [routerLink]="['/employees']" routerLinkActive="router-link-active">Pracownicy </a>
       </li>
 
     </ul>
