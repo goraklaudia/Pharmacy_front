@@ -55,7 +55,12 @@ export class SaleEventComponent implements OnInit {
   //   });
   // }
 
-
+  cleanListER(){
+    while (this.listOfAddedMedicamentsER.length) {
+      this.listOfAddedMedicamentsER.pop();
+    }
+  }
+  
   removeMedFromListER(i) {
     const idx = this.listOfAddedMedicamentsER.indexOf(i);
     if (idx !== -1) {
@@ -108,28 +113,15 @@ export class SaleEventComponent implements OnInit {
   }
 
   addERecept() {
-    const promise = new Promise((resolve, reject) => {
       this.listOfAddedMedicamentsER.forEach(element => {
         this.http.getMedicamentELeki(element[0]).subscribe(data => {
           
-          this.listOfMedicaments.push([data.eanCode, element[1], "ER", element[3], element[4]]);
+          this.listOfMedicaments.push([data.eanCode, element[1], element[2], element[3], element[4]]);
         });
       });
-      resolve(this.listOfMedicaments);
-    })
-    .then(data5 =>{
-      console.log("promise" + data5);
-    });
-
-    console.log("coss" + this.listOfMedicaments);
-    console.log("listt" + this.listOfAddedMedicamentsER);
-    
-    console.log("drugiecoss" + this.listOfMedicaments);
-    console.log("trzeecie" + this.listOfAddedMedicamentsER);
-    while (this.listOfAddedMedicamentsER.length) {
-      this.listOfAddedMedicamentsER.pop();
-    }
   }
+
+
 
   addRecept() {
 
@@ -157,9 +149,6 @@ export class SaleEventComponent implements OnInit {
 
   loadEprescription() {
     this.parametr = false;
-    console.log(this.verCodeER);
-    console.log(this.peselPacientER);
-    console.log("listamed" + this.listOfMedicaments);
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.loadedEPrescription = data;
       this.loadedEPrescription.elements.forEach(element => {
@@ -167,16 +156,11 @@ export class SaleEventComponent implements OnInit {
           let medElement: Medicaments;
           this.http.getMedicamentELeki(element.eanCode).subscribe(data1 => {
             medElement = data1;
-            let obj = [medElement.eanCode, element.quantity, "ER", this.peselPacientER, this.verCodeER];
+            let obj = [medElement, element.quantity, "ER", this.peselPacientER, this.verCodeER];
             console.log(obj);
             if (this.listOfMedicaments.length > 0) {
-              console.log("COSJEST");
-              console.log("obj" + obj[3]);
-              console.log("obj" + obj[4]);
-              console.log("obj" + this.listOfMedicaments);
-              console.log(this.listOfMedicaments.indexOf(obj));
               this.listOfMedicaments.forEach(element =>{
-                if(element[0] === obj[0] && element[1] === obj[1] && element[2] === obj[2] && element[3] === obj[3] && element[4] === obj[4]){
+                if(element[0] === obj && element[1] === obj[1] && element[2] === obj[2] && element[3] === obj[3] && element[4] === obj[4]){
                   console.log("Already added!!");
                 }
                 else {
@@ -188,13 +172,6 @@ export class SaleEventComponent implements OnInit {
               {
                 this.listOfAddedMedicamentsER.push(obj);
               }
-              // if (this.listOfMedicaments.indexOf(obj) !== -1) {
-              //   console.log("Already added!!");
-              // }
-              // else {
-                
-              //   this.listOfAddedMedicamentsER.push(obj);
-              // }
             }
             else {
               console.log("nicniema");
@@ -216,7 +193,7 @@ export class SaleEventComponent implements OnInit {
     this.listOfAddedMedicamentsWR.forEach(element => {
       this.listOfMedicaments.push([element[0], element[1], "WR", "", ""]);
     });
-    
+
     document.getElementById('closeWR').click();
 
   }
