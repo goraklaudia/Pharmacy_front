@@ -4,11 +4,12 @@
       <h3 style="text-align: center">Pracownicy</h3> <br><br>
 
       <div class="">
+          <button class = "btn btn-xs btn-primary" [routerLink]="['registration']" (click)="registration()">Dodaj pracownika <i class="fa fa-plus"></i></button> <br><br><br><br>
           <label id="">&nbsp; Lista pracowników:</label>
           <table class="table table-bordered" id="">
             <thead>
               <tr style="background: lightgrey">
-                <th scope="col">lp.</th>
+                <th scope="col">L.p.</th>
                 <th scope="col">Imię: </th>
                 <th scope="col">Nazwisko: </th>
                 <th scope="col">Email: </th>
@@ -32,7 +33,7 @@
               <!-- <tr></tr> -->
             </tbody>
           </table>
-          <button class = "btn btn-xs btn-primary" [routerLink]="['registration']" (click)="registration()"><i class="fa fa-plus"></i></button>
+
         </div>
 
 <br><br><br>
