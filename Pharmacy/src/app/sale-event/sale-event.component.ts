@@ -5,6 +5,7 @@ import { Prescription } from '../objects/Prescription';
 import { Sale } from '../objects/Sale';
 import { MedicamentsWithoutPre } from '../objects/MedicamentsWithoutPre';
 import { PrescriptionElement } from '../objects/PrescriptionElement';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sale-event',
@@ -57,10 +58,13 @@ export class SaleEventComponent implements OnInit {
   @Output() listOfAddedMedicamentsER: Array<Array<any>> = new Array();
   // isSubmited:
 
-  constructor(private http: MainService) {
+  constructor(private http: MainService, private router: Router) {
   }
 
   ngOnInit() {
+    if (this.http.token === '' || this.http.token === undefined) {
+      this.router.navigate(['/login']);
+    }
   }
 
   // getMedicamentsList() {
@@ -105,14 +109,14 @@ export class SaleEventComponent implements OnInit {
       this.listOfAddedMedicamentsWR.pop();
     }
   }
-    
+
     removeMedFromListER(i) {
       const idx = this.listOfAddedMedicamentsER.indexOf(i);
       if (idx !== -1) {
         return this.listOfAddedMedicamentsER.splice(idx, 1); // The second parameter is the number of elements to remove.
       }
     }
-    
+
 
   removeMedFromListR(i) {
     const idx = this.listOfAddedMedicamentsR.indexOf(i);
@@ -180,9 +184,10 @@ export class SaleEventComponent implements OnInit {
     prescript.licenceNumberOfTheDoctor = this.licenseNumberOfTheDoctorR;
     prescript.dateOfIssue = this.dateOfIssueR;
     prescript.dateOfFinalization = this.dateOfFinalizationR;
-    
+
     this.listOfAddedMedicamentsR.forEach(element => {
-      this.listOfMedicaments.push([element[0], element[1], "R", prescript, ""]);
+      console.log(element[0])
+      this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1] , 8,"R" , prescript, ""]);
     });
     document.getElementById('buttonCancelR').click();
   }
@@ -234,7 +239,7 @@ export class SaleEventComponent implements OnInit {
   }
 
   addWithoutRecept() {
-    
+
     console.log(this.eanCodeWR);
     this.listOfAddedMedicamentsWR.forEach(element => {
       console.log(element)
@@ -245,13 +250,13 @@ export class SaleEventComponent implements OnInit {
     document.getElementById('closeWR').click();
 
   }
-  
+
   saveSale() {
     // console.log('kupa' + this.listOfEprescriptions);
     this.listOfMedicaments.forEach(element => {
-      
+
       if (element[4] === 'ER') {
-        
+
         if(this.listOfPesVer.length > 0)
         {
           console.log(this.listOfPesVer);
@@ -262,7 +267,7 @@ export class SaleEventComponent implements OnInit {
               this.param = true;
              // pesVerEl[2].push(element[0]);
             }
-          }); 
+          });
           if(this.param === false)
           {
             this.listOfPesVer.push([element[5], element[6]]);
@@ -275,71 +280,38 @@ export class SaleEventComponent implements OnInit {
         }
       }
     });
-    // console.log("pesver");
-    // console.log(this.listOfPesVer);
 
     this.listOfPesVer.forEach(pesVerEle =>{
-      //console.log("hejo");
-    
+
       this.http.getPrescription(pesVerEle[0], pesVerEle[1]).subscribe(eprep =>{
-        //console.log(eprep.elements);
-      //  console.log("hejo2");
         eprep.elements = [];
-       // console.log(eprep.elements);
         this.listOfMedicaments.forEach(el => {
-
-          // console.log("el5");
-          // console.log(el[5]);
-          // console.log("pesVerEle[0]");
-          // console.log(pesVerEle[0]);
-          // console.log("el6");
-          // console.log(el[6]);
-          // console.log("pesVerEle[1]");
-          // console.log(pesVerEle[1]);
-
           if(el[5] === pesVerEle[0] && el[6] === pesVerEle[1]){
-            // console.log("hurrrra")
-            //console.log(eprep.id);
-            //console.log(el[0]);
-            
+
             this.http.getPrescriptionElement(eprep.id, el[0]).subscribe(next =>{
               eprep.elements.push(next);
-              // console.log("next");
-              // console.log(next);
-              // console.log("eprepelements");
-              // console.log(eprep.elements);
+
             });
           }
-          
+
         });
         // console.log("eprep");
        // console.log(eprep);
         this.listOfEprescriptions.push(eprep);
-        console.log("this.listOfEprescriptions")
+        console.log('this.listOfEprescriptions')
         console.log(this.listOfEprescriptions);
-        
+
         this.http.postPrescription(eprep).subscribe(res =>{
           console.log("res");
           console.log(res);
         });
       });
     });
-    // console.log("this.listOfEprescriptions")
-    // console.log(this.listOfEprescriptions);
     this.saleCompleted.prescriptions = this.listOfEprescriptions;
-    
-    // this.saleCompleted.prescriptions.forEach(presc =>{
-    //   console.log("presc");
-    //   console.log(presc);
-    //   this.http.postPrescription(presc).subscribe(res =>{
-    //     console.log("res");
-    //     console.log(res);
-    //   });
-    // });
-    console.log("this.saleCompleted.prescriptions")
+    console.log('this.saleCompleted.prescriptions')
     console.log(this.saleCompleted.prescriptions);
 
-    
+
     this.listOfMedicaments.forEach(element => {
       if (element[4] === 'WR') {
         this.medicamentsWithoutPre.eanCode = element[0];
@@ -348,13 +320,28 @@ export class SaleEventComponent implements OnInit {
         this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
       }
     });
-    console.log("this.saleCompleted");
+
+
+    this.listOfMedicaments.forEach(element => {
+      if (element[4] === 'R') {
+        // this.medicamentsWithoutPre.eanCode = element[0];
+        // this.medicamentsWithoutPre.quantity = element[2];
+        // this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
+        // this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
+      }
+    });
+    console.log('this.saleCompleted');
     console.log(this.saleCompleted);
 
 
     this.http.postSale(this.saleCompleted).subscribe(data => {
-      
-      console.log(data)
+
+      console.log(data);
+      while(this.listOfMedicaments.length) {
+        this.listOfMedicaments.pop();
+      }
+
+      // this.router.navigate(['sale']);
     })
   }
 }
