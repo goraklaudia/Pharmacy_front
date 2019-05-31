@@ -10,6 +10,7 @@ import { Sale } from './objects/Sale';
 import { ElementSale } from './objects/ElementSale';
 import { ElementJSONSale } from './objects/ElementJSONSale';
 import { Order } from './objects/Order';
+import { PrescriptionElement } from './objects/PrescriptionElement';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class MainService {
     return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/' + peselPacientER + '?code=' + verCodeER);
   }
 
+  getPrescriptionElement(prescriptionId: String, eanCode: String): Observable<PrescriptionElement> {
+    return this.http.get<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/' + prescriptionId + '/' + eanCode);
+  }
+ 
   getMedicaments(): Observable<Array<Medicaments>> {
     return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');
   }
@@ -100,6 +105,13 @@ export class MainService {
     return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+email);
 
   }
+
+  postPrescription(prescription: Prescription): Observable<String>{
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(prescription);
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Prescriptions', prescription,  {headers: header});
+  }
+
 
   getPrescriptions(): Observable<Array<Prescription>> {
     return this.http.get<Array<Prescription>>('https://pharmacy.azurewebsites.net/api/Prescriptions');

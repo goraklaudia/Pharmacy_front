@@ -53,6 +53,11 @@
           <td>{{i.eanCode}}</td>
           <td>{{i.quantity}}</td>
         </tr>
+        <tr *ngFor="let i of showSale.prescriptions; let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.elements[0].eanCode}}</td>
+              <td>{{i.elements[0].quantity}}</td>
+          </tr>
 
         <!-- <tr></tr> -->
       </tbody>

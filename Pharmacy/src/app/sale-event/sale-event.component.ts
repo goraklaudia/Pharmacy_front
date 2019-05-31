@@ -19,10 +19,11 @@ export class SaleEventComponent implements OnInit {
   medElement: Medicaments;
 
 //dodawanie sales i prescriptions dla e-prescriptions
+  listOfPesVer: Array<Array<any>> = new Array();
   listOfEprescriptions: Array<Prescription> = new Array();
   listOfEprescriptionsElements: Array<PrescriptionElement> = new Array();
 
-
+  param: Boolean;
   prescriptionElement: PrescriptionElement = new PrescriptionElement();
 
   //bez recepty
@@ -246,8 +247,96 @@ export class SaleEventComponent implements OnInit {
   //       }
 
   saveSale() {
-    console.log('kupa' + this.listOfEprescriptions);
+    // console.log('kupa' + this.listOfEprescriptions);
+    this.listOfMedicaments.forEach(element => {
+      
+      if (element[4] === 'ER') {
+        
+        if(this.listOfPesVer.length > 0)
+        {
+          console.log(this.listOfPesVer);
+          // console.log('cosjest')
+          this.param = false;
+          this.listOfPesVer.forEach(pesVerEl =>{
+            if(pesVerEl[0] === element[5] && pesVerEl[1] === element[6]){
+              this.param = true;
+             // pesVerEl[2].push(element[0]);
+            }
+          }); 
+          if(this.param === false)
+          {
+            this.listOfPesVer.push([element[5], element[6]]);
+          }
+        }
+        else
+        {
+          // console.log('pusto')
+          this.listOfPesVer.push([element[5], element[6]]);
+        }
+      }
+    });
+    // console.log("pesver");
+    // console.log(this.listOfPesVer);
 
+    this.listOfPesVer.forEach(pesVerEle =>{
+      //console.log("hejo");
+      this.http.getPrescription(pesVerEle[0], pesVerEle[1]).subscribe(eprep =>{
+        //console.log(eprep.elements);
+      //  console.log("hejo2");
+        eprep.elements = [];
+       // console.log(eprep.elements);
+        this.listOfMedicaments.forEach(el => {
+
+          // console.log("el5");
+          // console.log(el[5]);
+          // console.log("pesVerEle[0]");
+          // console.log(pesVerEle[0]);
+          // console.log("el6");
+          // console.log(el[6]);
+          // console.log("pesVerEle[1]");
+          // console.log(pesVerEle[1]);
+
+          if(el[5] === pesVerEle[0] && el[6] === pesVerEle[1]){
+            // console.log("hurrrra")
+            //console.log(eprep.id);
+            //console.log(el[0]);
+            this.http.getPrescriptionElement(eprep.id, el[0]).subscribe(next =>{
+              eprep.elements.push(next);
+              // console.log("next");
+              // console.log(next);
+              // console.log("eprepelements");
+              // console.log(eprep.elements);
+            });
+          }
+          
+        });
+        // console.log("eprep");
+       // console.log(eprep);
+        this.listOfEprescriptions.push(eprep);
+        console.log("this.listOfEprescriptions")
+        console.log(this.listOfEprescriptions);
+        this.http.postPrescription(eprep).subscribe(res =>{
+          console.log("res");
+          console.log(res);
+        });
+      });
+    });
+    // console.log("this.listOfEprescriptions")
+    // console.log(this.listOfEprescriptions);
+    this.saleCompleted.prescriptions = this.listOfEprescriptions;
+    
+    // this.saleCompleted.prescriptions.forEach(presc =>{
+    //   console.log("presc");
+    //   console.log(presc);
+    //   this.http.postPrescription(presc).subscribe(res =>{
+    //     console.log("res");
+    //     console.log(res);
+    //   });
+    // });
+    console.log("this.saleCompleted.prescriptions")
+    console.log(this.saleCompleted.prescriptions);
+
+    
     this.listOfMedicaments.forEach(element => {
       if (element[4] === 'WR') {
         this.medicamentsWithoutPre.eanCode = element[0];
@@ -255,23 +344,13 @@ export class SaleEventComponent implements OnInit {
         this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
         this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
       }
-      else if (element[4] === 'ER') {
-        this.http.getPrescription(element[5],element[6]).subscribe( pres =>{
-          if(this.listOfEprescriptions.indexOf(pres)!==-1){
-            console.log('jest prescipson ^^');
-            console.log(pres)
-            
-          }
-          else{
-            console.log('ni ma prescription :P');
-            this.listOfEprescriptions.push(pres);
-          }
-        });
-      }
     });
-    // this.http.postSale(this.saleCompleted).subscribe(data => {
-    //   console.log(data)
-    // })
+    console.log("this.saleCompleted");
+    console.log(this.saleCompleted);
+    this.http.postSale(this.saleCompleted).subscribe(data => {
+      
+      console.log(data)
+    })
   }
 }
 
