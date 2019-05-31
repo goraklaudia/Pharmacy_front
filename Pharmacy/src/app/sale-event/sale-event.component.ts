@@ -22,7 +22,7 @@ export class SaleEventComponent implements OnInit {
   listOfPesVer: Array<Array<any>> = new Array();
   listOfEprescriptions: Array<Prescription> = new Array();
   listOfEprescriptionsElements: Array<PrescriptionElement> = new Array();
-
+  listOfPrescriptions: Array<Prescription> = new Array();
   param: Boolean;
   prescriptionElement: PrescriptionElement = new PrescriptionElement();
 
@@ -167,9 +167,24 @@ export class SaleEventComponent implements OnInit {
 
 
   addRecept() {
+    let prescript: Prescription = new Prescription();
+    // prescript.????= this.nrPrescR;
+    prescript.nipOrRegonOfTheProvider = this.nrNIPR;
+    prescript.provider = this.namePoviderR;
+    prescript.nameOfThePatient = this.namePacientR;
+    prescript.surnameOfThePatient = this.surnamePacientR;
+    prescript.addressOfThePatient = this.adresPacientR;
+    prescript.peselNumberOfThePatient = this.peselPatientR;
+    prescript.surnameOfTheDoctor = this.surnameDoctorR;
+    prescript.specializationOfTheDoctor = this.specializationDoctorR;
+    prescript.licenceNumberOfTheDoctor = this.licenseNumberOfTheDoctorR;
+    prescript.dateOfIssue = this.dateOfIssueR;
+    prescript.dateOfFinalization = this.dateOfFinalizationR;
+    
     this.listOfAddedMedicamentsR.forEach(element => {
-      this.listOfMedicaments.push([element[0], element[1], "R", "", ""]);
+      this.listOfMedicaments.push([element[0], element[1], "R", prescript, ""]);
     });
+    document.getElementById('buttonCancelR').click();
   }
 
   loadEprescription() {
@@ -219,6 +234,7 @@ export class SaleEventComponent implements OnInit {
   }
 
   addWithoutRecept() {
+    
     console.log(this.eanCodeWR);
     this.listOfAddedMedicamentsWR.forEach(element => {
       console.log(element)
@@ -229,23 +245,7 @@ export class SaleEventComponent implements OnInit {
     document.getElementById('closeWR').click();
 
   }
-  // {
-  //   "provider": "string",
-  //     "nipOrRegonOfTheProvider": "string",
-  //     "nameOfThePatient": "string",
-  //     "surnameOfThePatient": "string",
-  //     "addressOfThePatient": "string",
-  //     "peselNumberOfThePatient": "string",
-  //     "nameOfTheDoctor": "string",
-  //     "surnameOfTheDoctor": "string",
-  //     "specializationOfTheDoctor": "string",
-  //     "licenseNumberOfTheDoctor": "string",
-  //     "elements": [    	  	{
-  //         "eanCode": "4444123454321",
-  //         "quantity": 2
-          
-  //       }
-
+  
   saveSale() {
     // console.log('kupa' + this.listOfEprescriptions);
     this.listOfMedicaments.forEach(element => {
@@ -280,6 +280,7 @@ export class SaleEventComponent implements OnInit {
 
     this.listOfPesVer.forEach(pesVerEle =>{
       //console.log("hejo");
+    
       this.http.getPrescription(pesVerEle[0], pesVerEle[1]).subscribe(eprep =>{
         //console.log(eprep.elements);
       //  console.log("hejo2");
@@ -300,6 +301,7 @@ export class SaleEventComponent implements OnInit {
             // console.log("hurrrra")
             //console.log(eprep.id);
             //console.log(el[0]);
+            
             this.http.getPrescriptionElement(eprep.id, el[0]).subscribe(next =>{
               eprep.elements.push(next);
               // console.log("next");
@@ -315,6 +317,7 @@ export class SaleEventComponent implements OnInit {
         this.listOfEprescriptions.push(eprep);
         console.log("this.listOfEprescriptions")
         console.log(this.listOfEprescriptions);
+        
         this.http.postPrescription(eprep).subscribe(res =>{
           console.log("res");
           console.log(res);
@@ -347,6 +350,8 @@ export class SaleEventComponent implements OnInit {
     });
     console.log("this.saleCompleted");
     console.log(this.saleCompleted);
+
+
     this.http.postSale(this.saleCompleted).subscribe(data => {
       
       console.log(data)
