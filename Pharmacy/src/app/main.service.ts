@@ -63,7 +63,7 @@ export class MainService {
   getPrescriptionElement(prescriptionId: String, eanCode: String): Observable<PrescriptionElement> {
     return this.http.get<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/' + prescriptionId + '/' + eanCode);
   }
- 
+
   getMedicaments(): Observable<Array<Medicaments>> {
     return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');
   }
@@ -80,7 +80,7 @@ export class MainService {
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {
-    console.log(medicaments);
+    // console.log(medicaments);
     return this.http.post<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments', medicaments);
   }
 
@@ -108,8 +108,7 @@ export class MainService {
 
   postPrescription(prescription: Prescription): Observable<String>{
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(prescription);
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Prescriptions', prescription,  {headers: header});
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Prescriptions/', prescription,  {headers: header});
   }
 
 

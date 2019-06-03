@@ -7,3 +7,7 @@ body {
 td {
     word-break: break-all;
 }
+
+/* th {
+  word-break: break-all;
+} */
