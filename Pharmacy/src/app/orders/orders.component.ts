@@ -132,17 +132,12 @@ export class OrdersComponent implements OnInit {
       this.isRefunded = false;
       this.nameMedicament = '';
       this.eanCode = '';
-    }, error => {
-      console.log(error.statusText)
-      if (error.statusText === 'Bad Request') {
-
-      }
     });
 
   }
 
   checkIfIsInMagazine() {
-    this.http.getMedicament(this.eanCode).subscribe(data => {
+    this.http.getMedicament('0'+ this.eanCode).subscribe(data => {
       console.log(data)
       if (data === null) {
         this.msg = 'Nie ma takiego leku w bazie dodaj pozostałe elementy';

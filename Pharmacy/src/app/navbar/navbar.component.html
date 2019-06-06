@@ -1,49 +1,8 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#" [routerLink]="['home']"><i class="fa fa-home" style="font-size:24px"></i></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-          <div class="btn-group">
-              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" >Pobierz &nbsp; <i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                  <li value="ntriples"><a >N-Triples</a></li>
-                  <li value="nquads"><a >N-Quads</a></li>
-                  <li value="nqx"><a >Extended N-Quads (NQX)</a></li>
-                  <li value="rdfxml"><a >RDF/XML</a></li>
-                  <li value="trig"><a >TriG</a></li>
-                  <li value="trix"><a >TriX</a></li>
-                  <li value="table"><a >Table</a></li>
-                  <li value="turtle"><a >Turtle</a></li>
-              </ul>
-          </div>
-
-      </li>
-    </ul>
-    <div class='btn-toolbar pull-right'>
-      <button class="btn btn-outline-light my-2 my-sm-0"  [routerLink]="['/login']" routerLinkActive="router-link-active" > <i class="fa fa-sign-in"></i>
-        Zaloguj</button>
-
-      <div class="btn-group" id="acc"style="width: 0vw; overflow: hidden;">
-        <button class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" >
-          <i class="fa fa-user-circle-o" style="font-size: 20px" ></i> &nbsp;&nbsp;<a id="emailText"></a>&nbsp;&nbsp;<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li>
-            <a class="dropdown-item" > <i class="fa fa-sign-out"></i> Wyloguj</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav> -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#" [routerLink]="['home']"><i class="fa fa-home" style="font-size:24px"></i></a>
+
+    <a class="navbar-brand" href="#" [routerLink]="['home']">    <img src="../../assets/image/icon2.png" alt="Smiley face" height="24" width="24"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -54,10 +13,7 @@
       <li class="nav-item active">
         <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/magazine']" routerLinkActive="router-link-active">Magazyn</a>
       </li>
-<!--
-      <li class="nav-item active">
-        <a class="nav-link" *ngIf="checkIfIsLog()==true" [routerLink]="['/sale']" routerLinkActive="router-link-active">Sprzedaż </a>
-      </li> -->
+
 
       <li class="nav-item dropdown"  *ngIf="checkIfIsLog()==true">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
