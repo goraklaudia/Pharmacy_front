@@ -7,6 +7,7 @@ export class Order {
   public pharmacistId: String;
   public dateOfIssue: Date;
   public dateOfFinalization: Date;
+  public documentName: String;
   public status: String;
   public elements: OrderElement[];
 

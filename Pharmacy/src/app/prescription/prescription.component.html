@@ -36,14 +36,14 @@
 <div *ngIf="showBox == true">
   <div class="container">
       <div class="card card-container">
-    <h2>Numer zamówienia: {{prescriptionDetali.id}}</h2>
+    <h2>Numer zamówienia: {{prescriptionDetali.documentName}}</h2>
     <label for="">Data złożenia: {{prescriptionDetali.dateOfIssue}}</label>
     <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
     <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>
     <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.surnameOfThePatient}}</label>
     <br> <br>
     <label id="">&nbsp; Lista leków:</label>
-    <table class="table table-bordered" id="">
+    <table class="table table-bordered table-responsive" id="">
       <thead>
         <tr style="background: lightgrey">
           <th scope="col">Lp.</th>

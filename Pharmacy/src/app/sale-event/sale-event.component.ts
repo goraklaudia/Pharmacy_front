@@ -258,7 +258,8 @@ export class SaleEventComponent implements OnInit {
 
   saveSale() {
     this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
-    
+    this.saleCompleted.prescriptions = new Array();
+
     this.listOfMedicaments.forEach(element => {
 
       if (element[4] === 'WR') {
@@ -282,7 +283,7 @@ export class SaleEventComponent implements OnInit {
           this.listOfPrescriptions.push([element[5], element[7]]);
         }
       }
-      
+
       if (element[4] === 'ER') {
 
         if (this.listOfEPrescriptionsData.length > 0) {
@@ -326,9 +327,9 @@ export class SaleEventComponent implements OnInit {
       // console.log(pesVerEle[2])
         for ( let i = 0; i < pesVerEle[2].elements.length; i++) {
           for ( let j = 0; j < this.listOfMedicaments.length; j++) {
-            if (pesVerEle[2].elements[i].eanCode === this.listOfMedicaments[j][0] 
-              && pesVerEle[2].elements[i].isSubmitted === false 
-              && pesVerEle[0] === this.listOfMedicaments[j][5] 
+            if (pesVerEle[2].elements[i].eanCode === this.listOfMedicaments[j][0]
+              && pesVerEle[2].elements[i].isSubmitted === false
+              && pesVerEle[0] === this.listOfMedicaments[j][5]
               && pesVerEle[1] === this.listOfMedicaments[j][6]) {
               wasInList = true;
             }
@@ -352,21 +353,20 @@ export class SaleEventComponent implements OnInit {
         console.log(pesVerEle[2]);
     });
 
-    console.log("this.saleCompleted");
+    console.log('this.saleCompleted');
     console.log(this.saleCompleted);
-    
+
     // this.listOfMedicaments.forEach(element => {
 
     // });
-    // this.http.postSale(this.saleCompleted).subscribe(data => {
+    this.http.postSale(this.saleCompleted).subscribe(data => {
 
-    //   console.log(data);
-    //   while(this.listOfMedicaments.length) {
-    //     this.listOfMedicaments.pop();
-    //   }
-
-    //   // this.router.navigate(['sale']);
-    // })
+      console.log(data);
+      while(this.listOfMedicaments.length) {
+        this.listOfMedicaments.pop();
+      }
+      // this.router.navigate(['sale']);
+    });
   }
 
 

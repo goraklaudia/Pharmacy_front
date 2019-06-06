@@ -5,28 +5,31 @@
 
     <div class="">
         <label id="">&nbsp; Lista dokonanych sprzedaży:</label>
-        <table class="table table-bordered" id="">
-          <thead>
-            <tr style="background: lightgrey">
-              <th scope="col">Lp.</th>
-              <th scope="col">Numer dokumentu sprzedaży</th>
-              <th scope="col">Data sprzedaży</th>
-              <th scope="col" style="width: 4px;">Opcje</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let i of listOfSales; let j = index">
-              <td>{{j+1}}</td>
-              <td>{{i.id}}</td>
-              <td>{{i.dateOfIssue}}</td>
-              <td>
-                <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
-              </td>
-            </tr>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="">
+                <thead>
+                  <tr style="background: lightgrey">
+                    <th scope="col">Lp.</th>
+                    <th scope="col">Numer dokumentu sprzedaży</th>
+                    <th scope="col">Data sprzedaży</th>
+                    <th scope="col" style="width: 4px;">Opcje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let i of listOfSales; let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.documentName}}</td>
+                    <td>{{i.dateOfIssue}}</td>
+                    <td>
+                      <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
+                    </td>
+                  </tr>
 
-            <!-- <tr></tr> -->
-          </tbody>
-        </table>
+                  <!-- <tr></tr> -->
+                </tbody>
+              </table>
+        </div>
+
         <!-- <button class = "btn btn-xs btn-primary" (click)="moveToAdd()"><i class="fa fa-plus"></i></button> -->
       </div>
 
@@ -38,8 +41,11 @@
     <label for="">Data złożenia: {{showSale.dateOfIssue}}</label>
     <label for="">Użytkownik: {{showSale.pharmacistId}}</label>
     <br> <br>
-    <label id="">&nbsp; Lista leków:</label>
-    <table class="table table-bordered" id="">
+
+    <!-- <div *ngIf="showSale.medicamentsSoldWithoutPrescription.length !== 0"> -->
+
+    <label id="">&nbsp; Lista leków zamówionych bez recepty:</label>
+    <table class="table table-bordered table-responsive" id="">
       <thead>
         <tr style="background: lightgrey">
           <th scope="col">Lp.</th>
@@ -53,15 +59,53 @@
           <td>{{i.eanCode}}</td>
           <td>{{i.quantity}}</td>
         </tr>
-        <tr *ngFor="let i of showSale.prescriptions; let j = index">
-              <td>{{j+1}}</td>
-              <td>{{i.elements[0].eanCode}}</td>
-              <td>{{i.elements[0].quantity}}</td>
-          </tr>
-
-        <!-- <tr></tr> -->
       </tbody>
     </table>
+  <!-- </div> -->
+
+  <!-- <div *ngIf="showSale.medicamentsSoldWithoutPrescription.length !== 0"> -->
+    <div *ngFor="let i of showSale.prescriptions">
+      <br>
+      <label id="">&nbsp; Lista leków ze zrealizowanych recept:</label>
+        <table class="table table-bordered table-responsive" id="">
+            <thead>
+              <tr style="background: lightgrey">
+                <th scope="col">Lp.</th>
+                <th scope="col">Kod EAN leku</th>
+                <th scope="col">Ilość</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let j of i.elements ; let idx = index">
+                  <td>{{idx+1}}</td>
+                  <td>{{j.eanCode}}</td>
+                  <td>{{j.quantity}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <!-- </div> -->
+
+
+          <!-- <tr *ngFor="let i of showSale.prescriptions">
+            <div *ngFor="let j of i.elements ; let idx = index">
+                <td>{{idx+1}}</td>
+                <td>{{j.eanCode}}</td>
+                <td>{{j.quantity}}</td>
+            </div>
+        </tr> -->
+
+        <!-- <tr *ngFor="let i of showSale.prescriptions">
+            <ng-template *ngFor="let j of i.elements ; let idx = index">
+                <td>{{idx+1}}</td>
+                <td>{{j.eanCode}}</td>
+                <td>{{j.quantity}}</td>
+            </ng-template>
+        </tr>
+
+
+      </tbody>
+    </table> -->
     <div>
     <div style="width:90%; float:left;">&nbsp;</div>
     <div style="width:10%; float:left">
