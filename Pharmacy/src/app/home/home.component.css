@@ -18,7 +18,7 @@ font-style: italic;
 }
 
 .carousel-item {
-    height: 65vh;
+    height: 30vh;
     min-height: 350px;
     background: no-repeat center center scroll;
     -webkit-background-size: cover;
