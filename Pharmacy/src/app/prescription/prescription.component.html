@@ -19,7 +19,7 @@
             <tr *ngFor="let i of listOfPrescription; let j = index">
               <td>{{j+1}}</td>
               <td>{{i.id}}</td>
-              <td>{{i.dateOfIssue}}</td>
+              <td>{{i.formattedDateOfIssue}}</td>
               <td><div *ngIf="i.elements[0] !== undefined">{{i.elements[0].eanCode}};</div></td>
               <td>
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
@@ -37,7 +37,7 @@
   <div class="container">
       <div class="card card-container">
     <h2>Numer zamówienia: {{prescriptionDetali.id}}</h2>
-    <label for="">Data złożenia: {{prescriptionDetali.dateOfIssue}}</label>
+    <label for="">Data złożenia: {{prescriptionDetali.formattedDateOfIssue}}</label>
     <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
     <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>
     <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.surnameOfThePatient}}</label>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 import { Prescription } from '../objects/Prescription';
+import { formatDate } from "@angular/common";
 
 @Component({
   selector: 'app-prescription',
@@ -27,6 +28,9 @@ export class PrescriptionComponent implements OnInit {
     this.http.getPrescriptions().subscribe(data => {
       console.log(data);
       this.listOfPrescription = data;
+      this.listOfPrescription.forEach(prescription => {
+        prescription.formattedDateOfIssue = formatDate(prescription.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
+      });
     })
   }
 
