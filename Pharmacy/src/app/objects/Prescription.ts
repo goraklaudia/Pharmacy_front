@@ -17,4 +17,6 @@ export class Prescription{
     public licenceNumberOfTheDoctor: String;
     public elements: PrescriptionElement[];
     public authorizationCode: String;
+
+    public formattedDateOfIssue: String;
 }
