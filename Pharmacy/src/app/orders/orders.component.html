@@ -69,14 +69,20 @@
       </table>
       </div>
     <br>
+
+
+    <br>
     <div *ngIf="orderToShow.status == 'created'">
       <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder()">Zatwierdź odbiór <i class="fa fa-check"></i></button>
+      <button class="btn btn-xs btn-info" style="font-size: 9px" (click)="download()">Pobierz <i class="fa fa-download"></i> </button>
     </div>
+    <div *ngIf="orderToShow.status == 'completed'">
+        <button class="btn btn-xs btn-info" style="font-size: 9px" (click)="download()">Pobierz <i class="fa fa-download"></i> </button>
+      </div>
+
+
 <br>
     <div>
-    <div style="width:90%; float:left;">&nbsp;</div>
-    <div style="width:10%; float:left">
-    </div>
   </div>
     </div>
   </div>

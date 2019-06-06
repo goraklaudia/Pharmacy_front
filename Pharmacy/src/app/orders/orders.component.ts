@@ -9,6 +9,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Medicaments } from '../objects/Medicaments';
 import { User } from '../objects/User';
 import { formatDate } from '@angular/common';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-orders',
@@ -73,6 +76,9 @@ export class OrdersComponent implements OnInit {
     console.log(i);
     this.showBoxDetails = true;
     this.orderToShow = i;
+    this.http.getUserById(this.orderToShow.pharmacistId).subscribe(data => {
+      this.orderToShow.emailPharmacist = data.email;
+    })
     // this.http.
   }
 
@@ -118,6 +124,14 @@ export class OrdersComponent implements OnInit {
       console.log(data);
       document.getElementById("closeModal").click();
       this.getOrders();
+      while(this.listOfMedicaments.length>0) {
+        this.listOfMedicaments.pop()
+      }
+      this.price = 0;
+      this.percentageOfRefund = 0;
+      this.isRefunded = false;
+      this.nameMedicament = '';
+      this.eanCode = '';
     }, error => {
       console.log(error.statusText)
       if (error.statusText === 'Bad Request') {
@@ -140,24 +154,7 @@ export class OrdersComponent implements OnInit {
     })
   }
 
-//   {
-//     "elements": [
-//         {
-//             "eanCode": "00191778013054",
-//             "medicament": {
-//                 "name": "Invanz",
-//                 "eanCode": "00191778013054",
-//                 "isRefunded": true,
-//                 "percentageOfRefund": 5,
-//                 "sellingPrice": 30,
-//                 "quantity": 0,
-//                 "comment": "string"
-//             },
-//             "quantity": 25,
-//             "price": 10
-//         }
-//     ]
-// }
+
 
   getOrders() {
     this.http.getOrder().subscribe(data2 => {
@@ -168,4 +165,38 @@ export class OrdersComponent implements OnInit {
       console.log(data2);
     });
   }
+
+
+
+
+  download() {
+    let stringWR = '';
+    this.orderToShow.elements.forEach(element => {
+      stringWR += 'Nazwa: ' + element.eanCode + ', ilość: ' + element.quantity + '\n';
+    });
+
+    var docDefinition = {
+      content: [
+        { text: 'Zamówienie towaru', style: 'header' },
+        '\n\n',
+        'Numer dokumentu: ' + this.orderToShow.documentName,
+        'Data złożenia: ' + this.orderToShow.formattedDateOfIssue,
+        'Zamówienie złożył: ' + this.orderToShow.emailPharmacist,
+        'Status zamówienia: ' + this.orderToShow.status,
+        '\n\n',
+        {text: 'Lista sprzedanych produktów:', style:'italic'},
+        stringWR,
+      ],
+
+      styles: {
+        header: {
+          fontSize: 22,
+          bold: true,
+          italic: true,
+        },
+      }
+    };
+    pdfMake.createPdf(docDefinition).download(this.orderToShow.documentName+'.pdf');
+}
+
 }

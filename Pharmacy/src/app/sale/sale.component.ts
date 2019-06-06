@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 import { Sale } from '../objects/Sale';
 import {formatDate} from "@angular/common";
+import * as jsPDF from 'jspdf';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-sale',
@@ -48,4 +52,41 @@ export class SaleComponent implements OnInit {
       this.showSale.emailPharmacist = data.email;
     })
   }
+
+  download() {
+    let stringWR = '';
+    let stringR = '';
+    this.showSale.medicamentsSoldWithoutPrescription.forEach(element => {
+      stringWR += 'Nazwa: ' + element.eanCode + ', ilość: ' + element.quantity + '\n';
+    });
+
+      this.showSale.prescriptions.forEach(element => {
+        element.elements.forEach(medic => {
+          stringR += 'Nazwa: ' + medic.eanCode + ', ilość: ' + medic.quantity + '\n';
+        });
+      });
+
+    var docDefinition = {
+      content: [
+        { text: 'Dokument sprzedaży', style: 'header' },
+        '\n\n',
+        'Numer dokumentu: ' + this.showSale.documentName,
+        'Data złożenia: ' + this.showSale.formattedDateOfIssue,
+        'Sprzedaż dokonał: ' + this.showSale.emailPharmacist,
+        '\n\n',
+        {text: 'Lista sprzedanych produktów:', style:'italic'},
+        stringR,
+        stringWR,
+      ],
+
+      styles: {
+        header: {
+          fontSize: 22,
+          bold: true,
+          italic: true,
+        },
+      }
+    };
+    pdfMake.createPdf(docDefinition).download(this.showSale.documentName+'.pdf');
+}
 }
