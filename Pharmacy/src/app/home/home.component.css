@@ -16,3 +16,13 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 font-style: italic;
 /* border: 1px solid black; */
 }
+
+.carousel-item {
+    height: 65vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
