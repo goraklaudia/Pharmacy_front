@@ -44,5 +44,8 @@ export class SaleComponent implements OnInit {
     console.log(i)
     this.showBox = true;
     this.showSale = i;
+    this.http.getUserById(this.showSale.pharmacistId).subscribe(data => {
+      this.showSale.emailPharmacist = data.email;
+    })
   }
 }

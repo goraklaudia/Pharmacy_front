@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   }
 
   checkRole() {
-    if (this.http.access === 'admin') {
+    if (this.http.access === 'admin' || this.http.access === 'Admin') {
       return true;
     } else {
       return false;

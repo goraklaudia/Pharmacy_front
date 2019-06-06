@@ -12,15 +12,5 @@ export class Sale {
   public medicamentsSoldWithoutPrescription: MedicamentsWithoutPre[];
 
   public formattedDateOfIssue: String;
+  public emailPharmacist: String;
 }
-
-
-// {
-//   "prescriptions": [],
-//   "medicamentsSoldWithoutPrescription": [
-//   {
-//     "eanCode": "1234567890124",
-// 		"quantity": 3
-//   }
-// ]
-// }

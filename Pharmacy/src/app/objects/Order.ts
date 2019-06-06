@@ -10,6 +10,5 @@ export class Order {
   public documentName: String;
   public status: String;
   public elements: OrderElement[];
-
   public formattedDateOfIssue: String;
 }

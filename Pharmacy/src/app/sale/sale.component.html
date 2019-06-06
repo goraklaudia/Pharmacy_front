@@ -37,15 +37,16 @@
 <div *ngIf="showBox == true">
   <div class="container">
       <div class="card card-container">
-    <h2>Numer sprzedaży: {{showSale.id}}</h2>
+    <h2>Numer sprzedaży: {{showSale.documentName}}</h2>
     <label for="">Data złożenia: {{showSale.formattedDateOfIssue}}</label>
-    <label for="">Użytkownik: {{showSale.pharmacistId}}</label>
+    <label for="">Użytkownik: {{showSale.emailPharmacist}}</label>
     <br> <br>
 
     <!-- <div *ngIf="showSale.medicamentsSoldWithoutPrescription.length !== 0"> -->
 
+    <div class="table-responsive">
     <label id="">&nbsp; Lista leków zamówionych bez recepty:</label>
-    <table class="table table-bordered table-responsive" id="">
+    <table class="table table-bordered" id="">
       <thead>
         <tr style="background: lightgrey">
           <th scope="col">Lp.</th>
@@ -60,14 +61,14 @@
           <td>{{i.quantity}}</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   <!-- </div> -->
 
   <!-- <div *ngIf="showSale.medicamentsSoldWithoutPrescription.length !== 0"> -->
-    <div *ngFor="let i of showSale.prescriptions">
+    <div *ngFor="let i of showSale.prescriptions" class="table-responsive">
       <br>
       <label id="">&nbsp; Lista leków ze zrealizowanych recept:</label>
-        <table class="table table-bordered table-responsive" id="">
+        <table class="table table-bordered " id="">
             <thead>
               <tr style="background: lightgrey">
                 <th scope="col">Lp.</th>
@@ -84,28 +85,7 @@
             </tbody>
           </table>
     </div>
-    <!-- </div> -->
 
-
-          <!-- <tr *ngFor="let i of showSale.prescriptions">
-            <div *ngFor="let j of i.elements ; let idx = index">
-                <td>{{idx+1}}</td>
-                <td>{{j.eanCode}}</td>
-                <td>{{j.quantity}}</td>
-            </div>
-        </tr> -->
-
-        <!-- <tr *ngFor="let i of showSale.prescriptions">
-            <ng-template *ngFor="let j of i.elements ; let idx = index">
-                <td>{{idx+1}}</td>
-                <td>{{j.eanCode}}</td>
-                <td>{{j.quantity}}</td>
-            </ng-template>
-        </tr>
-
-
-      </tbody>
-    </table> -->
     <div>
     <div style="width:90%; float:left;">&nbsp;</div>
     <div style="width:10%; float:left">

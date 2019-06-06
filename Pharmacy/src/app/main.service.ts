@@ -64,6 +64,11 @@ export class MainService {
     return this.http.get<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/' + prescriptionId + '/' + eanCode);
   }
 
+  putPrescriptionElement(prescription: PrescriptionElement): Observable<PrescriptionElement> {
+    return this.http.put<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/', prescription);
+  }
+
+
   getMedicaments(): Observable<Array<Medicaments>> {
     return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');
   }
@@ -101,8 +106,15 @@ export class MainService {
     return this.http.get<Array<User>>('https://pharmacy.azurewebsites.net/api/Users');
   }
 
+
+
   getUserByEmail(email: String): Observable<User> {
     return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+email);
+
+  }
+
+  getUserById(id: String): Observable<User> {
+    return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+id);
 
   }
 

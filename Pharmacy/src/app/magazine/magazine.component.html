@@ -25,7 +25,8 @@
     <br><br>
     <div *ngIf="btnLoadAll === false">
       <label id="">&nbsp; Lista leków w magazynie:</label>
-      <table class="table table-bordered table-responsive" id="">
+      <div class="table-responsive">
+      <table class="table table-bordered" id="">
         <thead>
           <tr style="background: lightgrey">
             <th scope="col">Nazwa leku</th>
@@ -48,13 +49,14 @@
           <!-- <tr></tr> -->
         </tbody>
       </table>
-
+      </div>
       <!-- <button class = "btn btn-xs btn-primary" (click)="gotToAdd()"><i class="fa fa-plus"></i></button> -->
     </div>
 
     <div *ngIf="btnLoadAll === true">
       <label id="">&nbsp; Lista leków w magazynie:</label>
-      <table class="table table-bordered table-responsive" id="">
+      <div class="table-responsive">
+      <table class="table table-bordered" id="">
         <thead>
           <tr style="background: lightgrey">
             <th scope="col">Nazwa leku</th>
@@ -77,7 +79,7 @@
           <!-- <tr></tr> -->
         </tbody>
       </table>
-
+</div>
       <!-- <button class = "btn btn-xs btn-primary" (click)="gotToAdd()"><i class="fa fa-plus"></i></button> -->
     </div>
 

@@ -80,6 +80,7 @@ export class OrdersComponent implements OnInit {
 
   loadMedicaments() {
     if (this.showBox === true) {
+      this.medicament = new Medicaments()
       this.medicament.eanCode = this.eanCode;
       this.medicament.name = this.nameMedicament;
       this.medicament.isRefunded = this.isRefunded;
@@ -90,6 +91,7 @@ export class OrdersComponent implements OnInit {
       this.medicament = new Medicaments()
     }
     this.listOfMedicaments.push([this.eanCode, this.quantity, this.price, this.medicament]);
+    console.log(this.listOfMedicaments)
   }
 
   removeMedFromList(i) {
@@ -114,6 +116,7 @@ export class OrdersComponent implements OnInit {
     console.log(this.elements)
     this.http.postOrder(this.elements).subscribe(data => {
       console.log(data);
+      document.getElementById("closeModal").click();
       this.getOrders();
     }, error => {
       console.log(error.statusText)

@@ -3,8 +3,8 @@
 
     <h3 style="text-align: center">Recepty</h3> <br><br>
 
-    <div class="">
         <label id="">&nbsp; Lista zrealizowanych recept:</label>
+    <div  class="table-responsive">
         <table class="table table-bordered" id="">
           <thead>
             <tr style="background: lightgrey">
@@ -36,18 +36,14 @@
 <div *ngIf="showBox == true">
   <div class="container">
       <div class="card card-container">
-<<<<<<< HEAD
-    <h2>Numer zamówienia: {{prescriptionDetali.documentName}}</h2>
-    <label for="">Data złożenia: {{prescriptionDetali.dateOfIssue}}</label>
-=======
     <h2>Numer zamówienia: {{prescriptionDetali.id}}</h2>
     <label for="">Data złożenia: {{prescriptionDetali.formattedDateOfIssue}}</label>
->>>>>>> 85a4e9b2c81f51b05abb649e617f6962c615d2be
     <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
     <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>
     <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.surnameOfThePatient}}</label>
     <br> <br>
     <label id="">&nbsp; Lista leków:</label>
+    <div class="table-responsive">
     <table class="table table-bordered table-responsive" id="">
       <thead>
         <tr style="background: lightgrey">
@@ -66,6 +62,7 @@
         <!-- <tr></tr> -->
       </tbody>
     </table>
+    </div>
     <div>
     <div style="width:90%; float:left;">&nbsp;</div>
     <div style="width:10%; float:left">

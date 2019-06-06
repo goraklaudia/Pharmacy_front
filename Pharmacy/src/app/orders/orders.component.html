@@ -7,7 +7,8 @@
       <br>
       <button class = "btn btn-xs btn-primary" data-toggle="modal" data-target="#createorder" >Dodaj zamówienie <i class="fa fa-plus"> </i></button><br><br><br><br>
         <label id="">&nbsp; Lista dokonanych zamówień:</label>
-        <table class="table table-bordered table-responsive" id="">
+        <div class="table-responsive">
+        <table class="table table-bordered" id="">
           <thead>
             <tr style="background: lightgrey">
               <th scope="col">L.p.</th>
@@ -20,7 +21,7 @@
           <tbody>
             <tr *ngFor="let i of listOfOrders; let j = index">
               <td>{{j+1}}</td>
-              <td>{{i.id}}</td>
+              <td>{{i.documentName}}</td>
               <td>{{i.formattedDateOfIssue}}</td>
               <td>{{i.status}}</td>
               <td style="text-align:center">
@@ -35,22 +36,23 @@
             <!-- <tr></tr> -->
           </tbody>
         </table>
-
+</div>
       </div>
 
 <br><br><br>
 <div *ngIf="showBoxDetails == true">
   <div class="container">
       <div class="card card-container">
-    <h2>Numer zamówienia: {{orderToShow.id}}</h2>
+    <h2>Numer zamówienia: {{orderToShow.documentName}}</h2>
     <label for="">Data zrealizowania: {{orderToShow.formattedDateOfIssue}}</label>
     <label for="">Status: {{orderToShow.status}} </label>
     <br>
     <label for="">Leki: </label>
-    <table class="table table-bordered table-responsive" id="">
+    <div class="table-responsive">
+    <table class="table table-bordered" id="">
         <thead>
           <tr style="background: lightgrey">
-            <th scope="col">lp.</th>
+            <th scope="col">L.p.</th>
             <th scope="col">Kod EAN</th>
             <th scope="col">Ilość</th>
           </tr>
@@ -65,6 +67,7 @@
           <!-- <tr></tr> -->
         </tbody>
       </table>
+      </div>
     <br>
     <div *ngIf="orderToShow.status == 'created'">
       <button class = "btn btn-xs btn-success" style="font-size: 9px" (click)="completedOrder()">Zatwierdź odbiór <i class="fa fa-check"></i></button>
@@ -152,7 +155,7 @@
       <hr>
     </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-secondary" id="closeModal"data-dismiss="modal">Anuluj</button>
         <button type="button" class="btn btn-success" (click)= "createOrder()">Zrealizuj</button>
       </div>
     </div>

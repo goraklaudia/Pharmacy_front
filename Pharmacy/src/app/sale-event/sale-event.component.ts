@@ -8,6 +8,7 @@ import { PrescriptionElement } from '../objects/PrescriptionElement';
 import { Router } from '@angular/router';
 import { resolve } from 'url';
 import { reject } from 'q';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-sale-event',
@@ -20,6 +21,7 @@ export class SaleEventComponent implements OnInit {
   saleCompleted: Sale = new Sale();
   medicamentsWithoutPre: MedicamentsWithoutPre = new MedicamentsWithoutPre();
   medElement: Medicaments;
+  prescriptionElementSale: PrescriptionElement = new PrescriptionElement();
 
 //dodawanie sales i prescriptions dla e-prescriptions
   listOfEPrescriptionsData: Array<Array<any>> = new Array();
@@ -302,25 +304,6 @@ export class SaleEventComponent implements OnInit {
       }
     });
 
-
-
-
-
-    // this.listOfPrescriptions.forEach(pesVerEle => {
-    //   for ( let j = 0; j < this.listOfMedicaments.length; j++) {
-    //         if(pesVerEle[0] === this.listOfMedicaments[j][5]) {
-    //           let e: PrescriptionElement = new PrescriptionElement;
-    //           e.eanCode = this.listOfMedicaments[j][0];
-    //           e.quantity = this.listOfMedicaments[j][2];
-    //           e.dosage = "dosage";
-    //           e.isSubmitted = true;
-    //           pesVerEle[1].elements.push(e);
-    //         }46
-    //       }
-    //       console.log("recepta")
-    //       console.log(pesVerEle);
-    // });
-
     this.listOfEPrescriptionsData.forEach(pesVerEle => {
       const listOfIndex = new Array();
       let wasInList = false;
@@ -339,8 +322,6 @@ export class SaleEventComponent implements OnInit {
           }
           else {
             wasInList = false;
-            // console.log(pesVerEle[2].elements[i].eanCode);
-            // console.log(i);
           }
         }
         // console.log(listOfIndex);
@@ -365,157 +346,23 @@ export class SaleEventComponent implements OnInit {
       while(this.listOfMedicaments.length) {
         this.listOfMedicaments.pop();
       }
+
+      this.listOfEPrescriptionsData.forEach(element => {
+        element[2].elements.forEach(element2 => {
+          this.prescriptionElementSale = new PrescriptionElement();
+
+          console.log(element2)
+          element2.isSubmitted = true;
+          this.http.putPrescriptionElement(element2).subscribe(data2 => {
+            console.log(data2)
+          })
+        });
+
+      });
       // this.router.navigate(['sale']);
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // saveSale() {
-
-  //   this.listOfMedicaments.forEach(element => {
-  //     if (element[4] === 'ER') {
-  //       if (this.listOfPesVer.length > 0) {
-  //         // console.log(this.listOfPesVer);
-  //         this.param = false;
-  //         this.listOfPesVer.forEach(pesVerEl =>{
-  //           if (pesVerEl[0] === element[5] && pesVerEl[1] === element[6]) {
-  //             this.param = true;
-  //           }
-  //         });
-  //         if (this.param === false) {
-  //           this.listOfPesVer.push([element[5], element[6]]);
-  //         }
-  //       } else {
-  //         this.listOfPesVer.push([element[5], element[6]]);
-  //       }
-  //     }
-  //   });
-
-
-
-  //   this.listOfPesVer.forEach(pesVerEle => {
-  //     const listOfIndex = new Array();
-  //     let wasInList = false;
-  //     this.http.getPrescription(pesVerEle[0], pesVerEle[1]).subscribe(eprep => {
-  //       console.log(eprep)
-  //       for ( let i = 0; i < eprep.elements.length; i++) {
-  //         for ( let j = 0; j < this.listOfMedicaments.length; j++) {
-  //           // tslint:disable-next-line:max-line-length
-  //           if (eprep.elements[i].eanCode === this.listOfMedicaments[j][0] && eprep.elements[i].isSubmitted === false && this.listOfMedicaments[j][5] === pesVerEle[0] && this.listOfMedicaments[j][6] === pesVerEle[1]) {
-  //             // console.log('jest ' + eprep.elements[i].eanCode);
-  //             wasInList = true;
-  //           }
-  //         }
-  //         console.log(eprep.elements[i].eanCode + ' --- ' + wasInList);
-  //         if (wasInList === true) {
-  //           console.log('beda submitted ' + eprep.elements[i].eanCode);
-  //           listOfIndex.push(i);
-  //           wasInList = false;
-  //         }
-  //       }
-
-  //       for ( let i = 0; i < listOfIndex.length; i++) {
-  //         const key = listOfIndex[i];
-  //         eprep.elements[key].isSubmitted = true;
-  //       }
-
-  //       console.log(eprep);
-  //       this.http.postPrescription(eprep).subscribe(res =>{
-  //           console.log('res ' + res);
-  //           console.log(res);
-  //       });
-
-  //       // this.listOfMedicaments.forEach(el => {
-  //       //     if (el[5] === pesVerEle[0] && el[6] === pesVerEle[1]) {
-  //       //       this.http.getPrescriptionElement(eprep.id, el[0]).subscribe(next =>{
-  //       //         eprep.elements.push(next);
-
-  //       //       });
-  //       //     }
-  //       //   });
-  //       // eprep.elements.forEach(el => {
-
-  //       // })
-
-  //         // this.listOfMedicaments.forEach(el => {
-  //         //   if (el[5] === pesVerEle[0] && el[6] === pesVerEle[1]){
-  //         //     this.http.getPrescriptionElement(eprep.id, el[0]).subscribe(next =>{
-  //         //       eprep.elements.push(next);
-  //         //       console.log(i + ' ' + next)
-  //         //       i++;
-  //         //     });
-  //         //   }
-  //         // });
-  //         // console.log("aaa" + eprep);
-  //         // this.listOfEprescriptions.push(eprep);
-  //         // this.http.postPrescription(eprep).subscribe(res =>{
-  //         //   // console.log('res ' + res);
-  //         //   // console.log(res);
-  //         // });
-  //       });
-  //   });
-  //   // this.saleCompleted.prescriptions = this.listOfEprescriptions;
-  //   // console.log('this.saleCompleted.prescriptions')
-  //   // console.log(this.saleCompleted.prescriptions);
-
-
-  //   // --------------------------------------------------------------------------------------------------------------------
-  //   // --------------------------------------------------------------------------------------------------------------------
-
-
-  //   this.listOfMedicaments.forEach(element => {
-  //     if (element[4] === 'WR') {
-  //       this.medicamentsWithoutPre.eanCode = element[0];
-  //       this.medicamentsWithoutPre.quantity = element[2];
-  //       this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
-  //       this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
-  //     }
-  //   });
-
-
-  //   // --------------------------------------------------------------------------------------------------------------------
-  //   // --------------------------------------------------------------------------------------------------------------------
-
-  //   this.listOfMedicaments.forEach(element => {
-  //     if (element[4] === 'R') {
-  //       // this.medicamentsWithoutPre.eanCode = element[0];
-  //       // this.medicamentsWithoutPre.quantity = element[2];
-  //       // this.saleCompleted.medicamentsSoldWithoutPrescription = new Array();
-  //       // this.saleCompleted.medicamentsSoldWithoutPrescription.push(this.medicamentsWithoutPre);
-  //     }
-  //   });
-  //   // console.log('this.saleCompleted');
-  //   // console.log(this.saleCompleted);
-
-
-  //   // this.http.postSale(this.saleCompleted).subscribe(data => {
-
-  //   //   console.log(data);
-  //   //   while(this.listOfMedicaments.length) {
-  //   //     this.listOfMedicaments.pop();
-  //   //   }
-
-  //   //   // this.router.navigate(['sale']);
-  //   // })
-  // }
 }
 
 
