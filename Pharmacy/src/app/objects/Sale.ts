@@ -9,6 +9,8 @@ export class Sale {
   public dateOfIssue: Date;
   public prescriptions: Prescription[];
   public medicamentsSoldWithoutPrescription: MedicamentsWithoutPre[];
+
+  public formattedDateOfIssue: String;
 }
 
 

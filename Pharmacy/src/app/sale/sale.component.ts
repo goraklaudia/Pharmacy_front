@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 import { Sale } from '../objects/Sale';
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-sale',
@@ -33,6 +34,9 @@ export class SaleComponent implements OnInit {
     this.http.getSales().subscribe(data => {
       console.log(data);
       this.listOfSales = data;
+      this.listOfSales.forEach(sale => {
+        sale.formattedDateOfIssue = formatDate(sale.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
+      });
     })
   }
 

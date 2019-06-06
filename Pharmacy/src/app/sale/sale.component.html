@@ -18,7 +18,7 @@
             <tr *ngFor="let i of listOfSales; let j = index">
               <td>{{j+1}}</td>
               <td>{{i.id}}</td>
-              <td>{{i.dateOfIssue}}</td>
+              <td>{{i.formattedDateOfIssue}}</td>
               <td>
                 <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
               </td>
@@ -35,7 +35,7 @@
   <div class="container">
       <div class="card card-container">
     <h2>Numer sprzedaży: {{showSale.id}}</h2>
-    <label for="">Data złożenia: {{showSale.dateOfIssue}}</label>
+    <label for="">Data złożenia: {{showSale.formattedDateOfIssue}}</label>
     <label for="">Użytkownik: {{showSale.pharmacistId}}</label>
     <br> <br>
     <label id="">&nbsp; Lista leków:</label>
