@@ -140,7 +140,7 @@
             <!-- <div *ngIf="name.errors.minlength">
               Kod EAN musi posiadać 14 cyfr
             </div> -->
-            <input type="number" name='quantityR' [(ngModel)]="quantityR" required minlength="14" maxlength="14" id="eanCodeR" class="form-control" placeholder="Ilość" required>
+            <input type="number" name='quantityR' [(ngModel)]="quantityR" required id="eanCodeR" class="form-control" placeholder="Ilość" required>
             <div class="input-group-append">
                 <button class = "btn btn-xs btn-primary" style="font-size: 9px" (click)="addMedicamentToList()"><i class="fa fa-plus"></i></button>
             </div>

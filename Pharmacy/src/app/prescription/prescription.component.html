@@ -18,7 +18,7 @@
           <tbody>
             <tr *ngFor="let i of listOfPrescription; let j = index">
               <td>{{j+1}}</td>
-              <td>{{i.id}}</td>
+              <td>{{i.documentName}}</td>
               <td>{{i.formattedDateOfIssue}}</td>
               <td><div *ngIf="i.elements[0] !== undefined">{{i.elements[0].eanCode}};</div></td>
               <td>
@@ -36,7 +36,7 @@
 <div *ngIf="showBox == true">
   <div class="container">
       <div class="card card-container">
-    <h2>Numer zamówienia: {{prescriptionDetali.id}}</h2>
+    <h2>Numer zamówienia: {{prescriptionDetali.documentName}}</h2>
     <label for="">Data złożenia: {{prescriptionDetali.formattedDateOfIssue}}</label>
     <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
     <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>

@@ -143,7 +143,6 @@ export class SaleEventComponent implements OnInit {
   addMedicamentToList() {
     console.log(this.eanCodeR);
     this.http.getMedicament(this.eanCodeR).subscribe(data => {
-      console.log(data);
       this.listOfAddedMedicamentsR.push([data, this.quantityR]);
       this.eanCodeR = '';
       this.quantityR = '';
@@ -153,6 +152,9 @@ export class SaleEventComponent implements OnInit {
   addMedicamentToListWR() {
     console.log(this.eanCodeWR);
 
+    if(this.eanCodeWR.length < 14) {
+      this.eanCodeWR = '0' + this.eanCodeWR;
+    }
     this.http.getMedicamentELeki(this.eanCodeWR).subscribe(data => {
       console.log(data);
       this.listOfAddedMedicamentsWR.push([data, this.quantityWR]);
@@ -188,6 +190,10 @@ export class SaleEventComponent implements OnInit {
     prescript.dateOfFinalization = this.dateOfFinalizationR;
     prescript.elements = [];
 
+    console.log('-------------')
+    console.log(prescript)
+    console.log('lista')
+    console.log(this.listOfAddedMedicamentsR)
     this.listOfAddedMedicamentsR.forEach(element => {
       console.log(element[0])
       this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1] , 8,"R" , this.nrPrescR, "", prescript]);

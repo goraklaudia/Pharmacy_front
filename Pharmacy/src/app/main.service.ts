@@ -11,6 +11,7 @@ import { ElementSale } from './objects/ElementSale';
 import { ElementJSONSale } from './objects/ElementJSONSale';
 import { Order } from './objects/Order';
 import { PrescriptionElement } from './objects/PrescriptionElement';
+import { ElementJSONSaleNull } from './objects/ElementJSONSaleNull';
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +34,17 @@ export class MainService {
 
   }
 
-  postOrder(elements: ElementJSONSale): Observable<String> {
+  postOrderNull(elements: ElementJSONSaleNull): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
     console.log(header);
     return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
   }
 
+  postOrder(elements: ElementJSONSale): Observable<String> {
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
+    console.log(header);
+    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
+  }
   putOrder(elements: Order): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
     console.log(header);

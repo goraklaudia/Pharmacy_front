@@ -114,10 +114,16 @@ export class OrdersComponent implements OnInit {
       this.element.eanCode = data[0];
       this.element.quantity = data[1];
       this.element.price = data[2];
-      this.element.medicament = data[3];
+      if (data[3] == null) {
+        this.element.medicament = new Medicaments();
+      } else {
+        this.element.medicament = data[3];
+      }
+
 
       this.elements.elements.push(this.element);
     });
+
 
     console.log(this.elements)
     this.http.postOrder(this.elements).subscribe(data => {
@@ -132,12 +138,13 @@ export class OrdersComponent implements OnInit {
       this.isRefunded = false;
       this.nameMedicament = '';
       this.eanCode = '';
+      this.showBoxDetails = false;
     });
 
   }
 
   checkIfIsInMagazine() {
-    this.http.getMedicament('0'+ this.eanCode).subscribe(data => {
+    this.http.getMedicament(this.eanCode).subscribe(data => {
       console.log(data)
       if (data === null) {
         this.msg = 'Nie ma takiego leku w bazie dodaj pozostałe elementy';

@@ -19,7 +19,7 @@
                   <tr *ngFor="let i of listOfSales; let j = index">
                     <td>{{j+1}}</td>
                     <td>{{i.documentName}}</td>
-                    <td>{{i.dateOfIssue}}</td>
+                    <td>{{i.formattedDateOfIssue}}</td>
                     <td>
                       <button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button>
                     </td>
