@@ -11,4 +11,5 @@ export class Order {
   public status: String;
   public elements: OrderElement[];
 
+  public formattedDateOfIssue: String;
 }

@@ -8,6 +8,7 @@ import { OrderElement } from '../objects/OrderElement';
 import { HttpHeaders } from '@angular/common/http';
 import { Medicaments } from '../objects/Medicaments';
 import { User } from '../objects/User';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-orders',
@@ -158,6 +159,9 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     this.http.getOrder().subscribe(data2 => {
       this.listOfOrders = data2;
+      this.listOfOrders.forEach(order => {
+        order.formattedDateOfIssue = formatDate(order.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
+      });
       console.log(data2);
     });
   }
