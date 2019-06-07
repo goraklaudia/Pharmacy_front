@@ -61,6 +61,7 @@ export class SaleEventComponent implements OnInit {
   // isSubmited:
 
   constructor(private http: MainService, private router: Router) {
+    this.listOfMedicaments = new Array();
   }
 
   ngOnInit() {
@@ -188,7 +189,14 @@ export class SaleEventComponent implements OnInit {
     prescript.licenceNumberOfTheDoctor = this.licenseNumberOfTheDoctorR;
     prescript.dateOfIssue = this.dateOfIssueR;
     prescript.dateOfFinalization = this.dateOfFinalizationR;
-    prescript.elements = [];
+    prescript.elements = new Array();
+    this.listOfAddedMedicamentsR.forEach(element => {
+      let pre = new PrescriptionElement();
+      pre.eanCode = element[0].eanCode;
+      pre.quantity = element[1];
+      prescript.elements.push(pre);
+    });
+
 
     console.log('-------------')
     console.log(prescript)
@@ -199,6 +207,7 @@ export class SaleEventComponent implements OnInit {
       this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1] , 8,"R" , this.nrPrescR, "", prescript]);
     });
     document.getElementById('buttonCancelR').click();
+    console.log(this.listOfMedicaments)
   }
 
   loadEprescription() {
@@ -339,6 +348,40 @@ export class SaleEventComponent implements OnInit {
         this.saleCompleted.prescriptions.push(pesVerEle[2]);
         console.log(pesVerEle[2]);
     });
+
+    // this.listOfPrescriptions.forEach(element => {
+    //   this.saleCompleted.prescriptions.push(element[1]);
+    // });
+
+    console.log('/////////////////')
+    console.log(this.listOfPrescriptions)
+
+    this.listOfPrescriptions.forEach(pesVerEle => {
+      const listOfIndex = new Array();
+      let wasInList = false;
+        for ( let i = 0; i < pesVerEle[1].elements.length; i++) {
+          for ( let j = 0; j < this.listOfMedicaments.length; j++) {
+            if (pesVerEle[1].elements[i].eanCode === this.listOfMedicaments[j][0] && pesVerEle[1].documentName === this.listOfMedicaments[j][5] && this.listOfMedicaments[j][4] === 'R') {
+              wasInList = true;
+            }
+          }
+          if (wasInList === false) {
+            listOfIndex.push(i);
+          }
+          else {
+            wasInList = false;
+          }
+        }
+        // console.log(listOfIndex);
+        for ( let i = listOfIndex.length-1; i >= 0 ; --i) {
+          const key = listOfIndex[i];
+          // console.log("k - " + key );
+          pesVerEle[1].elements.splice(key, 1);
+        }
+        this.saleCompleted.prescriptions.push(pesVerEle[1]);
+        console.log(pesVerEle[2]);
+    });
+
 
     console.log('this.saleCompleted');
     console.log(this.saleCompleted);

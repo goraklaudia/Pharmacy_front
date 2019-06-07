@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card card-container">
+    <div class="card card-container" style="padding: 2%">
 
       <h3 style="text-align: center">Pracownicy</h3> <br><br>
 
@@ -26,8 +26,8 @@
                 <td>{{i.username}}</td>
                 <td>{{i.fullName}}</td>
                 <td>{{i.email}}</td>
-                <td *ngIf="i.role === 'admin'">{{i.role}}</td>
-                <td *ngIf="i.role !== 'admin'">brak</td>
+                <td *ngIf="i.role === 'admin' || i.role === 'Admin' ">{{i.role}}</td>
+                <td *ngIf="i.role !== 'Admin' ">brak</td>
                 <td><button class = "btn btn-xs btn-secondary" style="font-size: 9px" (click)="showDetails(i)"><i class="fa fa-reorder"></i></button></td>
               </tr>
 
@@ -40,7 +40,7 @@
 <br><br><br>
 <div *ngIf="showBox == true">
     <div class="container">
-        <div class="card card-container">
+        <div class="card card-container" style="padding: 2%">
       <h2>{{showName}}&nbsp;{{showSurName}}</h2>
       <label for="">Imię: {{showName}}</label>
       <label for="">Nazwisko: {{showSurName}} </label>
@@ -50,10 +50,10 @@
       <label *ngIf="showEduc !== null">Zawód: {{showEduc}}</label>
       <br>
       <div>
-      <div style="width:90%; float:left;">&nbsp;</div>
-      <div style="width:10%; float:left">
+      <!-- <div style="width:90%; float:left;">&nbsp;</div>
+      <div style="width:10%; float:left"> -->
           <button class = "btn btn-xs btn-danger" style="font-size: 9px"(click)="deactivateUser()">Dezaktywuj</button>
-      </div>
+      <!-- </div> -->
     </div>
       </div>
     </div>

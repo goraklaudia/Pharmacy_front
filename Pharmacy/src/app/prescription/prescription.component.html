@@ -39,8 +39,9 @@
     <h2>Numer zamówienia: {{prescriptionDetali.documentName}}</h2>
     <label for="">Data złożenia: {{prescriptionDetali.formattedDateOfIssue}}</label>
     <label for="">NIP/REGON: {{prescriptionDetali.nipOrRegonOfTheProvider}}</label>
-    <label for="">Doktor: {{prescriptionDetali.specializationOfTheDoctor}}</label>
-    <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.surnameOfThePatient}}</label>
+    <label for="">Doktor: {{prescriptionDetali.nameOfTheDoctor}} {{prescriptionDetali.surnameOfTheDoctor}}</label>
+    <label for="">Specjalizacja: {{prescriptionDetali.specializationOfTheDoctor}}</label>
+    <label for="">Imię i nazwisko pacjenta: {{prescriptionDetali.nameOfThePatient}} {{prescriptionDetali.surnameOfThePatient}}</label>
     <br> <br>
     <label id="">&nbsp; Lista leków:</label>
     <div class="table-responsive">
