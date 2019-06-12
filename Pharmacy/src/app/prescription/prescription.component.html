@@ -18,7 +18,7 @@
           <tbody>
             <tr *ngFor="let i of listOfPrescription; let j = index">
               <td>{{j+1}}</td>
-              <td>{{i.documentName}}</td>
+              <td > <p *ngIf="i.documentName == undefined || i.documentName == ''"> E-Recepta</p> <p *ngIf="i.documentName != undefined || i.documentName != ''">{{i.documentName}}</p> </td>
               <td>{{i.formattedDateOfIssue}}</td>
               <td><div *ngIf="i.elements[0] !== undefined">{{i.elements[0].eanCode}};</div></td>
               <td>
