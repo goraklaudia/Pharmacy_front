@@ -70,12 +70,6 @@ export class SaleEventComponent implements OnInit {
     }
   }
 
-  // getMedicamentsList() {
-  //   this.http.getMedicaments().subscribe(data => {
-  //     console.log(data);
-  //     this.listOfMedicaments = data;
-  //   });
-  // }
 
   cleanAllListsAndParams(){
     document.getElementById("loadEpresBtn").removeAttribute("disabled");
@@ -142,7 +136,6 @@ export class SaleEventComponent implements OnInit {
   }
 
   addMedicamentToList() {
-    console.log(this.eanCodeR);
     this.http.getMedicament(this.eanCodeR).subscribe(data => {
       this.listOfAddedMedicamentsR.push([data, this.quantityR]);
       this.eanCodeR = '';
@@ -151,13 +144,11 @@ export class SaleEventComponent implements OnInit {
   }
 
   addMedicamentToListWR() {
-    console.log(this.eanCodeWR);
 
     if(this.eanCodeWR.length < 14) {
       this.eanCodeWR = '0' + this.eanCodeWR;
     }
     this.http.getMedicamentELeki(this.eanCodeWR).subscribe(data => {
-      console.log(data);
       this.listOfAddedMedicamentsWR.push([data, this.quantityWR]);
       this.eanCodeWR = '';
       this.quantityWR = '';
@@ -197,21 +188,13 @@ export class SaleEventComponent implements OnInit {
       prescript.elements.push(pre);
     });
 
-
-    console.log('-------------')
-    console.log(prescript)
-    console.log('lista')
-    console.log(this.listOfAddedMedicamentsR)
     this.listOfAddedMedicamentsR.forEach(element => {
-      console.log(element[0])
       this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1] , 8,"R" , this.nrPrescR, "", prescript]);
     });
     document.getElementById('buttonCancelR').click();
-    console.log(this.listOfMedicaments)
   }
 
   loadEprescription() {
-    // console.log(this.listOfMedicaments);
     this.http.getPrescription(this.peselPacientER, this.verCodeER).subscribe(data => {
       this.parametr = true;
       this.loadedEPrescription = data;
@@ -225,11 +208,9 @@ export class SaleEventComponent implements OnInit {
               this.listOfMedicaments.forEach(dana =>{
 
                 if(dana[0] === obj[0]  && dana[4] === obj[4] && dana[5] === obj[5] && dana[6] === obj[6]){
-                  // console.log("Already added!!");
                   this.parametr = false;
                 }
                 else {
-                  // console.log("Not added!!");
                 }
               });
 
@@ -238,18 +219,14 @@ export class SaleEventComponent implements OnInit {
                 this.listOfAddedMedicamentsER.push(obj);
               }
               else{
-                // console.log("parametr=false");
               }
             }
             else {
-              // console.log("nicniema");
               this.listOfAddedMedicamentsER.push(obj);
             }
           });
         }
         else {
-          // console.log("SUBMITTED");
-          // console.log(element.eanCode);
         }
       });
 
@@ -260,9 +237,7 @@ export class SaleEventComponent implements OnInit {
 
   addWithoutRecept() {
 
-    console.log(this.eanCodeWR);
     this.listOfAddedMedicamentsWR.forEach(element => {
-      console.log(element)
       const random = Math.floor(Math.random() * 20);
       this.listOfMedicaments.push([element[0].eanCode, element[0].name, element[1], random, "WR", "", "",""]);
 
@@ -322,7 +297,6 @@ export class SaleEventComponent implements OnInit {
     this.listOfEPrescriptionsData.forEach(pesVerEle => {
       const listOfIndex = new Array();
       let wasInList = false;
-      // console.log(pesVerEle[2])
         for ( let i = 0; i < pesVerEle[2].elements.length; i++) {
           for ( let j = 0; j < this.listOfMedicaments.length; j++) {
             if (pesVerEle[2].elements[i].eanCode === this.listOfMedicaments[j][0]
@@ -339,22 +313,12 @@ export class SaleEventComponent implements OnInit {
             wasInList = false;
           }
         }
-        // console.log(listOfIndex);
         for ( let i = listOfIndex.length-1; i >= 0 ; --i) {
           const key = listOfIndex[i];
-          // console.log("k - " + key );
           pesVerEle[2].elements.splice(key, 1);
         }
         this.saleCompleted.prescriptions.push(pesVerEle[2]);
-        console.log(pesVerEle[2]);
     });
-
-    // this.listOfPrescriptions.forEach(element => {
-    //   this.saleCompleted.prescriptions.push(element[1]);
-    // });
-
-    console.log('/////////////////')
-    console.log(this.listOfPrescriptions)
 
     this.listOfPrescriptions.forEach(pesVerEle => {
       const listOfIndex = new Array();
@@ -372,26 +336,15 @@ export class SaleEventComponent implements OnInit {
             wasInList = false;
           }
         }
-        // console.log(listOfIndex);
         for ( let i = listOfIndex.length-1; i >= 0 ; --i) {
           const key = listOfIndex[i];
-          // console.log("k - " + key );
           pesVerEle[1].elements.splice(key, 1);
         }
         this.saleCompleted.prescriptions.push(pesVerEle[1]);
-        console.log(pesVerEle[2]);
     });
 
-
-    console.log('this.saleCompleted');
-    console.log(this.saleCompleted);
-
-    // this.listOfMedicaments.forEach(element => {
-
-    // });
     this.http.postSale(this.saleCompleted).subscribe(data => {
 
-      console.log(data);
       while(this.listOfMedicaments.length) {
         this.listOfMedicaments.pop();
       }
@@ -400,15 +353,12 @@ export class SaleEventComponent implements OnInit {
         element[2].elements.forEach(element2 => {
           this.prescriptionElementSale = new PrescriptionElement();
 
-          console.log(element2)
           element2.isSubmitted = true;
           this.http.putPrescriptionElement(element2).subscribe(data2 => {
-            console.log(data2)
           })
         });
 
       });
-      // this.router.navigate(['sale']);
     });
   }
 

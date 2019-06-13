@@ -26,7 +26,6 @@ export class PrescriptionComponent implements OnInit {
 
   getPrescriptions() {
     this.http.getPrescriptions().subscribe(data => {
-      console.log(data);
       this.listOfPrescription = data;
       this.listOfPrescription.forEach(prescription => {
         prescription.formattedDateOfIssue = formatDate(prescription.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
@@ -35,7 +34,6 @@ export class PrescriptionComponent implements OnInit {
   }
 
   showDetails(i) {
-    console.log(i)
     this.showBox = true;
     this.prescriptionDetali = i;
   }

@@ -36,7 +36,6 @@ export class SaleComponent implements OnInit {
 
   getSale() {
     this.http.getSales().subscribe(data => {
-      console.log(data);
       this.listOfSales = data;
       this.listOfSales.forEach(sale => {
         sale.formattedDateOfIssue = formatDate(sale.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
@@ -45,7 +44,6 @@ export class SaleComponent implements OnInit {
   }
 
   showDetails(i) {
-    console.log(i)
     this.showBox = true;
     this.showSale = i;
     this.http.getUserById(this.showSale.pharmacistId).subscribe(data => {

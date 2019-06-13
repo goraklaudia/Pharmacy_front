@@ -25,7 +25,6 @@ export class MagazineComponent implements OnInit {
 
   getMedicamentsList() {
     this.httpMain.getMedicaments().subscribe(data => {
-      console.log(data);
       this.listOfMedicaments = data;
     });
   }
@@ -38,7 +37,6 @@ export class MagazineComponent implements OnInit {
     this.btnLoadAll = true;
 
     this.listOfMedicaments.forEach(element => {
-      console.log("tu")
       if (element.name === this.nameSearch) {
         this.tmpListSearch.push(element);
       }

@@ -26,12 +26,6 @@ export class AddMedicamentsComponent implements OnInit {
   }
 
   addMedicaments() {
-    console.log(this.eanCode)
-    console.log(this.name)
-    console.log(this.isRefunded)
-    console.log(this.percentageOfRefund)
-    console.log(this.quantity)
-
     this.medicaments.name = this.name;
     this.medicaments.eanCode = this.eanCode;
     this.medicaments.isRefunded = this.isRefunded;
@@ -39,7 +33,6 @@ export class AddMedicamentsComponent implements OnInit {
     this.medicaments.quantity = this.quantity;
 
     this.httpMain.postMedicament(this.medicaments).subscribe(data => {
-      console.log(data);
       this.router.navigate(['/magazine']);
 
     });

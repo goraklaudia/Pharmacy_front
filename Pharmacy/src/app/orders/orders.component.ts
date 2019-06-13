@@ -56,24 +56,18 @@ export class OrdersComponent implements OnInit {
   }
 
   cancelOrder(i: Order) {
-    console.log(i);
-    console.log(i.id)
     this.http.deleteOrder(i.id).subscribe(data => {
-      console.log(data);
       this.getOrders();
     });
   }
 
   completedOrder() {
-    console.log(this.orderToShow);
     this.orderToShow.status = 'completed';
     this.http.putOrder(this.orderToShow).subscribe(data => {
-      console.log(data)
     });
   }
 
   showDetails(i: Order) {
-    console.log(i);
     this.showBoxDetails = true;
     this.orderToShow = i;
     this.http.getUserById(this.orderToShow.pharmacistId).subscribe(data => {
@@ -97,7 +91,6 @@ export class OrdersComponent implements OnInit {
       this.medicament = new Medicaments()
     }
     this.listOfMedicaments.push([this.eanCode, this.quantity, this.price, this.medicament]);
-    console.log(this.listOfMedicaments)
   }
 
   removeMedFromList(i) {
@@ -124,10 +117,7 @@ export class OrdersComponent implements OnInit {
       this.elements.elements.push(this.element);
     });
 
-
-    console.log(this.elements)
     this.http.postOrder(this.elements).subscribe(data => {
-      console.log(data);
       document.getElementById("closeModal").click();
       this.getOrders();
       while(this.listOfMedicaments.length>0) {
@@ -147,7 +137,6 @@ export class OrdersComponent implements OnInit {
 
   checkIfIsInMagazine() {
     this.http.getMedicament(this.eanCode).subscribe(data => {
-      console.log(data)
       if (data === null) {
         this.msg = 'Nie ma takiego leku w bazie dodaj pozostałe elementy';
         this.showBox = true;
@@ -166,7 +155,6 @@ export class OrdersComponent implements OnInit {
       this.listOfOrders.forEach(order => {
         order.formattedDateOfIssue = formatDate(order.dateOfIssue, 'd.MM.yyyy, H:mm', 'en-US');
       });
-      console.log(data2);
     });
   }
 

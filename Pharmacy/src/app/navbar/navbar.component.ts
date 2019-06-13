@@ -15,12 +15,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.http.token)
 
   }
 
   logout() {
-    console.log('wylogowano');
     this.http.token = '';
     this.router.navigate(['/home']);
   }

@@ -63,10 +63,8 @@ export class EmployeesComponent implements OnInit {
   }
 
   deactivateUser() {
-    console.log(this.userToUpdate)
     this.userToUpdate.isActive = false;
     this.httpMain.putUser(this.userToUpdate).subscribe(data => {
-      console.log(data);
       this.getEmployees();
     });
     this.showBox = false;

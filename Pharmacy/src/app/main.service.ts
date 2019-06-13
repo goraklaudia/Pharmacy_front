@@ -20,122 +20,118 @@ export class MainService {
   email: String;
   token: String;
   access: String;
+  uri: String = 'https://pharmacy.azurewebsites.net';
+  uriEleki: String = 'https://e-leki.azurewebsites.net';
+  uriErecepta: String = 'https://e-recepta.azurewebsites.net';
+
 
   constructor(private http: HttpClient) { }
 
   getSale(): Observable<Sale> {
-    return this.http.get<Sale>('https://pharmacy.azurewebsites.net/api/Sales');
+    return this.http.get<Sale>(this.uri + '/api/Sales');
   }
 
   postSale(sales: Sale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Sales', sales,  {headers: header})
+    return this.http.post<String>(this.uri + '/api/Sales', sales,  {headers: header})
 
   }
 
   postOrderNull(elements: ElementJSONSaleNull): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
+    return this.http.post<String>(this.uri + '/api/Orders', elements,  {headers: header})
   }
 
   postOrder(elements: ElementJSONSale): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Orders', elements,  {headers: header})
+    return this.http.post<String>(this.uri + '/api/Orders', elements,  {headers: header})
   }
   putOrder(elements: Order): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.put<String>('https://pharmacy.azurewebsites.net/api/Orders/' + elements.id, elements,  {headers: header})
+    return this.http.put<String>(this.uri + '/api/Orders/' + elements.id, elements,  {headers: header})
   }
 
   deleteOrder(elements: String): Observable<String> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.delete<String>('https://pharmacy.azurewebsites.net/api/Orders/' + elements, {headers: header})
+    return this.http.delete<String>(this.uri + '/api/Orders/' + elements, {headers: header})
   }
 
 
   getOrder(): Observable<Array<Order>> {
-    return this.http.get<Array<Order>>('https://pharmacy.azurewebsites.net/api/Orders');
+    return this.http.get<Array<Order>>(this.uri + '/api/Orders');
   }
 
   getPrescription(peselPacientER: String, verCodeER: String): Observable<Prescription> {
-    return this.http.get<Prescription>('https://e-recepta.azurewebsites.net/api/prescriptions/' + peselPacientER + '?code=' + verCodeER);
+    return this.http.get<Prescription>( this.uriErecepta + '/api/prescriptions/' + peselPacientER + '?code=' + verCodeER);
   }
 
   getPrescriptionElement(prescriptionId: String, eanCode: String): Observable<PrescriptionElement> {
-    return this.http.get<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/' + prescriptionId + '/' + eanCode);
+    return this.http.get<PrescriptionElement>(this.uriErecepta + '/api/prescriptionElements/' + prescriptionId + '/' + eanCode);
   }
 
   putPrescriptionElement(prescription: PrescriptionElement): Observable<PrescriptionElement> {
-    return this.http.put<PrescriptionElement>('https://e-recepta.azurewebsites.net/api/prescriptionElements/', prescription);
+    return this.http.put<PrescriptionElement>(this.uriErecepta + '/api/prescriptionElements/', prescription);
   }
 
 
   getMedicaments(): Observable<Array<Medicaments>> {
-    return this.http.get<Array<Medicaments>>('https://pharmacy.azurewebsites.net/api/Medicaments');
+    return this.http.get<Array<Medicaments>>(this.uri + '/api/Medicaments');
   }
 
   getMedicament(eanCode: String): Observable<Medicaments> {
 
-    return this.http.get<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments/' + eanCode);
+    return this.http.get<Medicaments>(this.uri + '/api/Medicaments/' + eanCode);
   }
 
   getMedicamentELeki(eanCode: String): Observable<Medicaments> {
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    console.log(header);
-    return this.http.get<Medicaments>('https://e-leki.azurewebsites.net/api/medicaments?ean=' + eanCode,  {headers: header});
+    return this.http.get<Medicaments>(this.uriEleki + '/api/medicaments?ean=' + eanCode,  {headers: header});
   }
 
   postMedicament(medicaments: Medicaments): Observable<Medicaments> {
-    // console.log(medicaments);
-    return this.http.post<Medicaments>('https://pharmacy.azurewebsites.net/api/Medicaments', medicaments);
+    return this.http.post<Medicaments>(this.uri + '/api/Medicaments', medicaments);
   }
 
   putUser(user: User): Observable<String> {
-    return this.http.put<String>('https://pharmacy.azurewebsites.net/api/Users', user);
+    return this.http.put<String>(this.uri + '/api/Users', user);
   }
 
   login(login: Login): Observable<Confirm> {
-    return this.http.post<Confirm>('https://pharmacy.azurewebsites.net/api/Login', login);
+    return this.http.post<Confirm>(this.uri + '/api/Login', login);
   }
 
   register(user: User): Observable<String> {
-    console.log(user);
-    return this.http.post<string>('https://pharmacy.azurewebsites.net/api/Users', user);
+    return this.http.post<string>(this.uri + '/api/Users', user);
   }
 
   getUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>('https://pharmacy.azurewebsites.net/api/Users');
+    return this.http.get<Array<User>>(this.uri + '/api/Users');
   }
 
 
 
   getUserByEmail(email: String): Observable<User> {
-    return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+email);
+    return this.http.get<User>(this.uri + '/api/Users/' + email);
 
   }
 
   getUserById(id: String): Observable<User> {
-    return this.http.get<User>('https://pharmacy.azurewebsites.net/api/Users/'+id);
+    return this.http.get<User>(this.uri + '/api/Users/'+id);
 
   }
 
   postPrescription(prescription: Prescription): Observable<String>{
     const header = new HttpHeaders({'Authorization': 'Bearer ' + this.token});
-    return this.http.post<String>('https://pharmacy.azurewebsites.net/api/Prescriptions/', prescription,  {headers: header});
+    return this.http.post<String>(this.uri + '/api/Prescriptions/', prescription,  {headers: header});
   }
 
 
   getPrescriptions(): Observable<Array<Prescription>> {
-    return this.http.get<Array<Prescription>>('https://pharmacy.azurewebsites.net/api/Prescriptions');
+    return this.http.get<Array<Prescription>>(this.uri + '/api/Prescriptions');
   }
 
   getSales(): Observable<Array<Sale>> {
-    return this.http.get<Array<Sale>>('https://pharmacy.azurewebsites.net/api/Sales');
+    return this.http.get<Array<Sale>>(this.uri + '/api/Sales');
   }
 
 }
